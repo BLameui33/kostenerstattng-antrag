@@ -39,7 +39,6 @@
       /* NEU HINZUGEFÜGT für besseren Umbruch langer Wörter: */
       overflow-wrap: break-word;
       word-wrap: break-word; /* Für ältere Browser */
-      word-break: break-all;
     }
 
     h2 {
@@ -141,6 +140,18 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+    @media (max-width: 600px) { /* Gilt für Bildschirme bis 600px Breite */
+      h1 {
+        font-size: 1.7rem; /* Kleinere Schriftgröße für h1 auf Smartphones, z.B. 26px oder 28px */
+                               /* Passe diesen Wert an, bis es gut aussieht. 2.2rem sind ca. 35px, 1.7rem ca. 27px */
+        
+        /* Automatische Silbentrennung aktivieren: */
+        -webkit-hyphens: auto; /* Für Chrome, Safari, neuere Opera, Edge */
+        -moz-hyphens: auto;    /* Für Firefox */
+        -ms-hyphens: auto;     /* Für ältere Microsoft Browser (IE, älterer Edge) */
+        hyphens: auto;         /* Standard-CSS-Eigenschaft */
+      }
+    }
   </style>
 </head>
 <body>
