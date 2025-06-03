@@ -61,21 +61,27 @@
     }
 
     .remove-btn-display {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background-color: #ff6b6b;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      font-size: 12px;
-      line-height: 22px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 12px; /* Schriftgröße des 'X' */
+  font-weight: bold;
+  cursor: pointer;
+  
+  /* Flexbox für perfekte Zentrierung des 'X' */
+  display: flex;
+  justify-content: center; /* Zentriert horizontal */
+  align-items: center;   /* Zentriert vertikal */
+  
+  /* line-height und text-align sind bei Flexbox für die Zentrierung des Inhalts nicht mehr primär nötig */
+  /* line-height: 1; */ /* Setzt line-height auf einen neutralen Wert, falls geerbt */
+}
     .remove-btn-display:hover {
       background-color: #ee5253;
     }
