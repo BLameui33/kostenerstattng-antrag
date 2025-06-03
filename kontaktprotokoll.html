@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Kontaktprotokoll Therapeutensuche</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="antrag-style.css"> <style>
+    /* Grundlegende Stile von antrag-style.css werden übernommen */
+
+    .protokoll-container {
+      display: flex;
+      flex-wrap: wrap; /* Umbruch auf kleinen Bildschirmen */
+      gap: 2rem;
+    }
+
+    .eingabe-spalte {
+      flex: 1;
+      min-width: 300px; /* Mindestbreite für die Eingabespalte */
+    }
+
+    .anzeige-spalte {
+      flex: 1.5; /* Anzeigespalte etwas breiter */
+      min-width: 320px; /* Mindestbreite für die Anzeigespalte */
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .anzeige-spalte h2 {
+      margin-top: 0;
+      font-size: 1.3em;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+    .anzeige-spalte h3 {
+        font-size: 1.1em;
+        color: #333;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .protokoll-eintrag-display { /* Für die Anzeige in der rechten Spalte */
+      background-color: #fff;
+      border: 1px solid #e7e7e7;
+      padding: 0.8rem;
+      margin-bottom: 0.8rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      position: relative; /* Für den Remove-Button */
+    }
+    .protokoll-eintrag-display p {
+      margin: 3px 0;
+      line-height: 1.4;
+    }
+     .protokoll-eintrag-display strong {
+        display: inline-block;
+        min-width: 90px; /* Etwas Platz für die Label */
+        color: #444;
+    }
+
+    .remove-btn-display { /* Angepasster Remove Button für die Anzeigeliste */
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      line-height: 22px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .remove-btn-display:hover {
+      background-color: #ee5253;
+    }
+
+    .eingabe-form fieldset {
+      margin-bottom: 1.5rem;
+      padding: 1rem; /* Etwas weniger Padding als Haupt-Fieldsets */
+    }
+    .eingabe-form legend {
+        font-size: 1.1em; /* Etwas kleiner */
+    }
+    .eingabe-form label {
+        margin-top: 0.5rem;
+        font-size: 0.95em;
+    }
+    .eingabe-form input[type="text"],
+    .eingabe-form input[type="date"],
+    .eingabe-form textarea,
+    .eingabe-form select {
+        padding: 8px; /* Kompaktere Eingabefelder */
+        font-size: 0.95rem;
+        width: 100%; /* Volle Breite innerhalb des Elternelements */
+        box-sizing: border-box; /* Wichtig für width: 100% */
+    }
+    .eingabe-form textarea {
+        min-height: 60px;
+    }
+    .eingabe-form .action-button { /* Button im Formular */
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        margin-top: 0.5rem; /* Abstand nach oben */
+    }
+
+    .button-group-protokoll-main { /* Für die Haupt-Aktionsbuttons unter den Spalten */
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container"> <h1>Kontaktprotokoll für die Therapeutensuche</h1>
+  <p>Fügen Sie links Ihre Kontakte hinzu. Rechts sehen Sie eine Übersicht. Alle Daten werden im Browser gespeichert.</p>
+
+<div class="kontakt-info" style="background-color: #fff3cd; border-left-color: #ffeeba; color: #856404; margin-bottom: 1.5rem;">
+  <p style="margin: 0;"><strong>Wichtiger Hinweis:</strong> Die hier eingegebenen Daten werden nur lokal in Ihrem Browser gespeichert (localStorage). Wenn Sie die Browserdaten (Cache, Cookies, Website-Daten für diese Seite) löschen, gehen diese Protokolleinträge verloren. Es findet keine Übertragung an einen Server statt.</p>
+</div>
+
+  <div class="protokoll-container">
+    <div class="eingabe-spalte">
+      <form id="formBereitsKontaktiert" class="eingabe-form">
+        <fieldset>
+          <legend>✔️ Bereits kontaktiert</legend>
+          <label for="bk_name_input">Name des Therapeuten/der Praxis:</label>
+          <input type="text" id="bk_name_input" required>
+
+          <label for="bk_datum_input">Datum des Kontakts:</label>
+          <input type="date" id="bk_datum_input" required>
+
+          <label for="bk_art_input">Art des Kontakts: (Telefon, E-Mail, etc.)</label>
+          <input type="text" id="bk_art_input" required>
+          
+          <label for="bk_status_input">Status des Kontakts:</label>
+          <select id="bk_status_input">
+              <option value="absage_kapazitaeten" selected>Absage (keine Kapazitäten)</option>
+              <option value="absage_privat">Absage (nur Privatpatienten/Selbstzahler)</option>
+              <option value="wartezeit_genannt">Wartezeit genannt (Details in Notizen)</option>
+              <option value="warteliste_platz">Auf Warteliste gesetzt</option>
+              <option value="termin_sprechstunde">Termin für Sprechstunde/Erstgespräch</option>
+              <option value="keine_antwort">Keine Antwort/Rückmeldung erhalten</option>
+              <option value="nicht_erreicht">Telefonisch nicht erreicht (mehrmals)</option>
+              <option value="sonstiges">Sonstiges (Details in Notizen)</option>
+          </select>
+
+          <label for="bk_ergebnis_input">Zusätzliche Notizen/Details zum Ergebnis:</label>
+          <textarea id="bk_ergebnis_input" rows="3"></textarea> <button type="submit" class="action-button">Hinzufügen</button>
+        </fieldset>
+      </form>
+
+      <form id="formNochZuKontaktieren" class="eingabe-form">
+        <fieldset>
+          <legend>🗓️ Noch zu kontaktieren / Planung</legend>
+          <label for="nzk_name_input">Name des Therapeuten/der Praxis:</label>
+          <input type="text" id="nzk_name_input" required>
+
+          <label for="nzk_kontaktinfo_input">Telefonnummer/E-Mail:</label>
+          <input type="text" id="nzk_kontaktinfo_input">
+
+          <label for="nzk_erreichbarkeit_input">Erreichbarkeit/Anrufzeiten/Notizen:</label>
+          <textarea id="nzk_erreichbarkeit_input" rows="3"></textarea>
+          <button type="submit" class="action-button">Zur Planung hinzufügen</button>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="anzeige-spalte">
+      <h2>Aktuelles Protokoll</h2>
+      
+      <h3>✔️ Bereits kontaktierte Therapeut:innen</h3>
+      <div id="displayBereitsKontaktiertListe">
+        </div>
+
+      <h3>🗓️ Noch zu kontaktierende Therapeut:innen / Planung</h3>
+      <div id="displayNochZuKontaktierenListe">
+        </div>
+    </div>
+  </div>
+
+  <div class="button-group-protokoll-main">
+    <button type="button" id="saveProtokollBtn" class="action-button">Gesamtes Protokoll speichern</button>
+    <button type="button" id="loadProtokollBtn" class="action-button">Gespeichertes Protokoll laden</button>
+    <button type="button" id="deleteProtokollBtn" class="action-button" style="background-color: #dc3545;">Gesamtes Protokoll löschen</button>
+  </div>
+  <div class="button-group" style="margin-top:1rem; border-top:none;">
+    <a href="antrag.html" class="action-button">📄 Zurück zum Antrag</a>
+    <a href="info-kostenerstattung.html" class="action-button">ℹ️ Zurück zur Infoseite</a>
+  </div>
+
+</div> <script src="protokoll-script.js"></script>
+
+<footer>
+    <p>&copy; 2025 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
+
+</body>
+</html>

@@ -4,95 +4,40 @@
   <meta charset="UTF-8">
   <title>Kostenerstattungs-Antrag Psychotherapie</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="antrag-style.css">
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      margin: 1rem auto;
-      padding: 1rem;
-      max-width: 800px;
-      background-color: #f9f9f9;
-      color: #333;
+    /* Spezifische Zusatz-Styles für die Protokollanzeige auf dieser Seite */
+    .protokoll-anzeige-bereich legend {
+      font-size: 1.1em; /* Etwas kleiner als Haupt-Legends */
+      color: #444;
+      font-weight: normal; /* Nicht so prominent wie die editierbaren Sektionen */
     }
-    .form-container {
-        background-color: #fff;
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: 500;
-    }
-    label small {
-        display: block;
-        font-weight: normal;
-        font-size: 0.85em;
-        color: #555;
-        margin-top: 0.2rem;
-    }
-    input[type="text"], input[type="date"], textarea, select {
-      width: 100%;
+    .protokoll-anzeige-eintrag {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
       padding: 10px;
-      margin-top: 0.3rem;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
+      margin-bottom: 8px;
       border-radius: 4px;
-      font-size: 1rem;
+      font-size: 0.9em;
     }
-    textarea {
-        min-height: 80px;
-        resize: vertical;
+    .protokoll-anzeige-eintrag p {
+      margin: 4px 0; /* Etwas mehr Platz zwischen den Zeilen eines Eintrags */
+      line-height: 1.4;
     }
-    fieldset {
-      border: 1px solid #ddd;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      border-radius: 6px;
-    }
-    legend {
-      font-weight: bold;
-      font-size: 1.2em;
-      padding: 0 0.5em;
+    .protokoll-anzeige-eintrag strong {
       color: #333;
+      display: inline-block; /* Stellt sicher, dass das Strong-Element korrekt umgebrochen wird */
+      min-width: 100px; /* Für eine leichte Ausrichtung der Inhalte (Wert ggf. anpassen) */
+      margin-right: 5px;
     }
-    button, .action-button {
-      margin-top: 1rem;
-      margin-right: 0.5rem;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      border: none;
-      font-weight: bold;
-    }
-    button[type="submit"] {
-        background-color: #0070f3;
-        color: white;
-    }
-    button[type="submit"]:hover {
-        background-color: #005bb5;
-    }
-    .action-button {
-        background-color: #6c757d;
-        color: white;
-    }
-    .action-button:hover {
-        background-color: #5a6268;
-    }
-    .button-group {
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 1px solid #eee;
-    }
-    .kontakt-info {
-        font-size: 0.9em;
-        background-color: #eef7ff;
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 1rem;
-        border-left: 3px solid #0070f3;
+    .protokoll-hinweis {
+      font-size: 0.9em;
+      color: #555;
+      margin-bottom: 1rem;
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 4px;
+      border-left: 3px solid #0070f3;
     }
   </style>
 </head>
@@ -127,15 +72,15 @@
       <textarea id="kassenAdresse" required></textarea>
     </fieldset>
 
-<fieldset>
-  <legend>Angaben zur Therapiebedürftigkeit</legend>
-  <label for="beschwerden_diagnose">Kurze Beschreibung Ihrer Beschwerden/Diagnose: <small>(z.B. seit wann bestehen die Beschwerden, Hauptsymptome, ggf. Verdachtsdiagnose oder bereits ärztlich bestätigte Diagnose. Hinweis auf Notwendigkeitsbescheinigung kann hier erfolgen.)</small></label>
-  <textarea id="beschwerden_diagnose" rows="5" required></textarea>
-</fieldset>
+    <fieldset>
+      <legend>Angaben zur Therapiebedürftigkeit</legend>
+      <label for="beschwerden_diagnose">Kurze Beschreibung Ihrer Beschwerden/Diagnose: <small>(z.B. seit wann bestehen die Beschwerden, Hauptsymptome, ggf. Verdachtsdiagnose oder bereits ärztlich bestätigte Diagnose. Hinweis auf Notwendigkeitsbescheinigung kann hier erfolgen.)</small></label>
+      <textarea id="beschwerden_diagnose" rows="5" required></textarea>
+    </fieldset>
 
     <fieldset>
-      <legend>Nachweis der Therapeutensuche</legend>
-      <p class="kontakt-info">Bitte dokumentieren Sie hier Ihre vergeblichen Versuche, einen Therapieplatz bei kassenzugelassenen Psychotherapeut:innen zu finden. **Mindestens 5 Versuche sind erforderlich.** Maximal 10 können eingetragen werden.</p>
+      <legend>Nachweis der Therapeutensuche (manuelle Eingabe)</legend>
+      <p class="kontakt-info">Bitte dokumentieren Sie hier Ihre vergeblichen Versuche, einen Therapieplatz bei kassenzugelassenen Psychotherapeut:innen zu finden. **Mindestens 5 Versuche sind erforderlich.** Maximal 10 können eingetragen werden. <br><strong>Tipp:</strong> Nutzen Sie auch unser <a href="kontaktprotokoll.html" target="_blank">detailliertes Kontaktprotokoll-Tool</a>. Die dort gespeicherten Einträge werden weiter unten zur Übersicht angezeigt.</p>
       
       <fieldset>
         <legend>Kontaktversuch 1 (Pflicht)</legend>
@@ -256,7 +201,21 @@
         <label for="kontakt_ergebnis_9">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
         <input type="text" id="kontakt_ergebnis_9">
       </fieldset>
+    </fieldset>
 
+    <fieldset class="protokoll-anzeige-bereich">
+        <legend>Übersicht: Bereits kontaktierte Therapeut:innen (aus Kontaktprotokoll)</legend>
+        <p class="protokoll-hinweis">Diese Daten stammen aus dem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll-Tool</a> und können nur dort bearbeitet werden.</p>
+        <div id="protokollAnzeigeBereitsKontaktiert">
+            </div>
+    </fieldset>
+
+    <fieldset class="protokoll-anzeige-bereich">
+        <legend>Übersicht: Geplante Kontakte (aus Kontaktprotokoll)</legend>
+        <p class="protokoll-hinweis">Diese Daten stammen aus dem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll-Tool</a> und können nur dort bearbeitet werden.</p>
+        <div id="protokollAnzeigeNochZuKontaktieren">
+            </div>
+    </fieldset>
     <fieldset>
       <legend>Gewünschte:r Therapeut:in (für Kostenerstattung)</legend>
       <p class="kontakt-info">Geben Sie hier die Daten des/der approbierten Psychotherapeut:in an, bei dem/der Sie die Therapie im Kostenerstattungsverfahren beginnen möchten.</p>
@@ -287,13 +246,15 @@
       <button type="submit">📄 PDF erstellen</button>
     </div>
   </form>
-</div> <div id="spendenPopup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+</div>
+
+<div id="spendenPopup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
   <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.25);">
     <h2 style="font-size: 1.5em; margin-top:0; margin-bottom: 1rem;">Danke für deine Nutzung 💛</h2>
     <p style="margin-bottom: 1.5rem;">Wenn dir dieses Tool geholfen hat, unterstütze das Projekt gerne mit einer kleinen Spende:</p>
     <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-top: 1rem;">
-      <input type="hidden" name="business" value="alexanderdemirel@gmail.com" /> <input type="hidden" name="item_name" value="Spende für das Tool Kostenerstattungsverfahren Psychotherapie." />
+      <input type="hidden" name="business" value="info@kassen-lotse.de" /> <input type="hidden" name="item_name" value="Spende für das Tool Kostenerstattungsverfahren Psychotherapie." />
       <input type="hidden" name="currency_code" value="EUR" />
       <input type="submit" value="Spenden mit PayPal" style="background:#ffc439; border:none; padding:0.9rem 1.8rem; font-weight:bold; border-radius:5px; cursor: pointer; color: #333; font-size: 1em;" />
     </form>
@@ -301,114 +262,11 @@
   </div>
 </div>
 
-<script>
-  // JavaScript für Speichern und Laden von Formulardaten
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('antragForm');
-    const saveBtn = document.getElementById('saveBtn');
-    const loadBtn = document.getElementById('loadBtn');
-    const storageKey = 'antragFormData';
+<script src="script.js"></script>
 
-    // Liste aller relevanten Formularfeld-IDs
-    const formElementIds = [
-      "name", "adresse", "geburt", "nummer", "kasse", "kassenAdresse", "beschwerden_diagnose",
-      "therapeut", "therapeutAdresse", "approbiert", "kassenzulassung", "verfuegbar"
-    ];
-    const kontaktBaseIds = ["kontakt_name_", "kontakt_datum_", "kontakt_art_", "kontakt_ergebnis_"];
-    const maxKontakte = 10;
-
-    function getFormData() {
-      const data = {};
-      formElementIds.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-          data[id] = element.value;
-        }
-      });
-      data.kontakte = [];
-      for (let i = 0; i < maxKontakte; i++) {
-        const kontakt = {};
-        let hasData = false;
-        kontaktBaseIds.forEach(baseId => {
-          const element = document.getElementById(baseId + i);
-          if (element && element.value) {
-            kontakt[baseId.replace('kontakt_', '').replace('_','')] = element.value; // z.B. name, datum
-            if (element.value.trim() !== "") hasData = true; // Prüft, ob zumindest ein Feld im Kontakt Daten hat
-          } else if (element) {
-             kontakt[baseId.replace('kontakt_', '').replace('_','')] = ""; // Leere Werte speichern
-          }
-        });
-        // Speichere den Kontakt, auch wenn er leer ist, um die Struktur zu erhalten
-        data.kontakte.push(kontakt);
-      }
-      return data;
-    }
-
-    function populateForm(data) {
-      formElementIds.forEach(id => {
-        const element = document.getElementById(id);
-        if (element && data[id] !== undefined) {
-          element.value = data[id];
-        }
-      });
-      if (data.kontakte) {
-        for (let i = 0; i < maxKontakte; i++) {
-          if (data.kontakte[i]) {
-            kontaktBaseIds.forEach(baseId => {
-              const element = document.getElementById(baseId + i);
-              const key = baseId.replace('kontakt_', '').replace('_','');
-              if (element && data.kontakte[i][key] !== undefined) {
-                element.value = data.kontakte[i][key];
-              }
-            });
-          }
-        }
-      }
-    }
-
-    saveBtn.addEventListener('click', function() {
-      const data = getFormData();
-      localStorage.setItem(storageKey, JSON.stringify(data));
-      alert('Ihre Eingaben wurden im Browser gespeichert!');
-    });
-
-    loadBtn.addEventListener('click', function() {
-      const savedData = localStorage.getItem(storageKey);
-      if (savedData) {
-        const data = JSON.parse(savedData);
-        populateForm(data);
-        alert('Gespeicherte Eingaben wurden geladen!');
-      } else {
-        alert('Keine gespeicherten Daten gefunden.');
-      }
-    });
-
-    // Automatisch laden beim Seitenaufruf
-    const autoLoadData = localStorage.getItem(storageKey);
-    if (autoLoadData) {
-      try {
-        const data = JSON.parse(autoLoadData);
-        populateForm(data);
-        console.log('Daten automatisch aus localStorage geladen.');
-      } catch (e) {
-        console.error("Fehler beim Parsen der localStorage Daten: ", e);
-        localStorage.removeItem(storageKey); // Fehlerhafte Daten entfernen
-      }
-    }
-  });
-
-  // Pop-up schließen Funktion (wird auch von script.js für das Spenden-Pop-up genutzt)
-  // Diese Funktion ist hier, falls script.js nicht geladen wird oder um Redundanz zu vermeiden,
-  // falls script.js sie bereits global definiert. Besser wäre eine zentrale Definition.
-  if (typeof closePopup !== 'function') {
-    window.closePopup = function() {
-      const popup = document.getElementById("spendenPopup");
-      if (popup) {
-        popup.style.display = "none";
-      }
-    }
-  }
-</script>
-
+<footer>
+    <p>&copy; 2025 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
+</body>
+ 
 </body>
 </html>
