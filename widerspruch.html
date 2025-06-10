@@ -5,13 +5,121 @@
   <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2rem; }
-    input, textarea { width: 100%; margin-bottom: 1rem; padding: 0.5rem; }
-    label { font-weight: bold; }
-    button { padding: 1rem 2rem; background: #0070f3; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
-    /* Alter Spendenhinweis-Style - nicht mehr primär genutzt, wenn Pop-up aktiv ist */
-    .spenden { margin-top: 2rem; background: #f9f9f9; padding: 1rem; border-left: 4px solid #ffc439; }
-  </style>
+    /* Grundlegende Stile für die Seite */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f4f7f6; /* Ein sanfter Hintergrundton */
+        color: #333;
+        line-height: 1.6;
+        padding: 1rem;
+    }
+
+    /* Container für das Formular, um es optisch abzuheben */
+    .form-container {
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 2.5rem;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* Gruppierung von Formularfeldern für eine bessere Struktur */
+    fieldset {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    legend {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #005bb5; /* Akzentfarbe für Überschriften */
+        padding: 0 0.5rem;
+        margin-left: 1rem;
+    }
+
+    /* Styling für Labels */
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    /* Einheitliches Styling für alle Eingabefelder */
+    input[type="text"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 0.9rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fdfdfd;
+        box-sizing: border-box; /* Wichtig für konsistente Größen */
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Visuelles Feedback, wenn ein Feld ausgewählt wird */
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="tel"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #0070f3; /* Haupt-Akzentfarbe */
+        box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+    }
+    
+    textarea {
+        min-height: 120px;
+        resize: vertical; /* Erlaubt dem Nutzer die Höhenanpassung */
+    }
+
+    /* Styling für Buttons */
+    button {
+        display: inline-block;
+        padding: 0.9rem 1.8rem;
+        background: #0070f3;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-right: 1rem;
+    }
+    
+    /* Effekt, wenn man mit der Maus über den Button fährt */
+    button:hover {
+        background: #005bb5;
+        transform: translateY(-2px); /* Leichter Schwebe-Effekt */
+    }
+    
+    /* Zusätzlicher Button-Stil für sekundäre Aktionen (z.B. Laden) */
+    button.secondary {
+        background: #e9ecef;
+        color: #333;
+    }
+    
+    button.secondary:hover {
+         background: #d4dae0;
+    }
+
+    /* Modernisierter Spendenhinweis */
+    .spenden {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: #e7f5ff;
+        border-left: 5px solid #0070f3;
+        border-radius: 6px;
+    }
+</style>
 </head>
 <body>
 
