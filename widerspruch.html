@@ -5,27 +5,26 @@
   <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    /* 1. Hintergrund für die gesamte Seite */
+    /* 1. Hintergrund und Schrift für die gesamte Seite */
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background-color: #f4f7f6; /* Sanfter, grauer Hintergrund */
-        color: #333;
-        line-height: 1.6;
-        margin: 0; /* Wichtig, um Standard-Abstände zu entfernen */
-        padding: 2rem 1rem; /* Sorgt für etwas Abstand, falls das Formular auf Mobilgeräten den Rand berührt */
+        margin: 0;
+        /* Padding sorgt für Abstand an den Rändern, besonders auf Mobilgeräten */
+        padding: 2rem 1rem; 
     }
 
-    /* 2. Der weiße Container für das Formular in der Mitte */
-    .form-container {
-        max-width: 700px; /* Die maximale Breite des Formulars */
-        margin: 0 auto;    /* Dies zentriert den Container horizontal */
+    /* 2. Das Formular selbst wird zum zentrierten, weißen Kasten */
+    form {
+        max-width: 700px;
+        margin: 0 auto;    /* Zentriert das Formular */
         padding: 2.5rem;
         background: #ffffff;
         border-radius: 12px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
     
-    /* AB HIER FOLGT DAS BEKANNTE STYLING FÜR DIE FORMULAR-ELEMENTE */
+    /* 3. Die Stile für die Elemente IM FORMULAR bleiben gleich */
     
     fieldset {
         border: 1px solid #ddd;
@@ -59,7 +58,6 @@
         margin-bottom: 1.5rem;
         border: 1px solid #ccc;
         border-radius: 6px;
-        background-color: #fdfdfd;
         box-sizing: border-box;
         transition: border-color 0.3s, box-shadow 0.3s;
     }
@@ -91,7 +89,7 @@
         cursor: pointer;
         transition: background-color 0.3s, transform 0.2s;
         margin-right: 1rem;
-        margin-top: 1rem; /* Etwas Abstand nach oben */
+        margin-top: 1rem;
     }
     
     button:hover {
