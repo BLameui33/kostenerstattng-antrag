@@ -4,131 +4,215 @@
   <meta charset="UTF-8">
   <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link rel="stylesheet" href="antrag-style.css">
   <style>
-    /* 1. Hintergrund und Schrift für die gesamte Seite */
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #f4f7f6; /* Sanfter, grauer Hintergrund */
-        margin: 0;
-        /* Padding sorgt für Abstand an den Rändern, besonders auf Mobilgeräten */
-        padding: 2rem 1rem; 
-    }
+        /* 1. Grundlegende Stile & Farbvariablen */
+        :root {
+            --primary-color: #0070f3;
+            --primary-hover: #005bb5;
+            --secondary-color: #e9ecef;
+            --secondary-hover: #d4dae0;
+            --background-color: #f4f7f6;
+            --text-color: #333;
+            --light-text-color: #555;
+            --white-color: #ffffff;
+            --border-color: #ccc;
+            --border-radius-main: 12px;
+            --border-radius-small: 6px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
 
-    /* 2. Das Formular selbst wird zum zentrierten, weißen Kasten */
-    form {
-        max-width: 700px;
-        margin: 0 auto;    /* Zentriert das Formular */
-        padding: 2.5rem;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* 3. Die Stile für die Elemente IM FORMULAR bleiben gleich */
-    
-    fieldset {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-    legend {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #005bb5;
-        padding: 0 0.5rem;
-        margin-left: 1rem;
-    }
+        /* 2. Container und Layout */
+        .site-header {
+            background-color: var(--white-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+            text-align: center;
+        }
 
-    label {
-        font-weight: 600;
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #555;
-    }
+        .site-logo {
+            color: #1a5276;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .site-logo:hover {
+            color: #d35400;
+        }
 
-    input[type="text"],
-    input[type="date"],
-    input[type="tel"],
-    input[type="email"],
-    textarea {
-        width: 100%;
-        padding: 0.9rem;
-        margin-bottom: 1.5rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-sizing: border-box;
-        transition: border-color 0.3s, box-shadow 0.3s;
-    }
+        .main-container {
+            max-width: 750px;
+            margin: 2rem auto; /* Abstand oben/unten und zentriert */
+            padding: 1rem;
+        }
 
-    input[type="text"]:focus,
-    input[type="date"]:focus,
-    input[type="tel"]:focus,
-    input[type="email"]:focus,
-    textarea:focus {
-        outline: none;
-        border-color: #0070f3;
-        box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
-    }
-    
-    textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
+        .intro-text, .hinweis-box-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #1a5276;
+            margin-bottom: 0.5rem;
+        }
 
-    button {
-        display: inline-block;
-        padding: 0.9rem 1.8rem;
-        background: #0070f3;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-        margin-right: 1rem;
-        margin-top: 1rem;
-    }
-    
-    button:hover {
-        background: #005bb5;
-        transform: translateY(-2px);
-    }
-    
-    button.secondary {
-        background: #e9ecef;
-        color: #333;
-    }
-    
-    button.secondary:hover {
-         background: #d4dae0;
-    }
-    /* Stil für den Header-Container */
-.site-header {
-    background-color: #ffffff; /* Weißer Hintergrund */
-    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
-    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
-    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
-    text-align: center;
-}
+        .hinweis-box {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid;
+            border-radius: var(--border-radius-small);
+            text-align: left;
+        }
+        
+        .hinweis-box.info {
+            background-color: #e6f7ff;
+            border-color: #91d5ff;
+        }
 
-/* Stil für das Logo bzw. den Seitennamen */
-.site-logo {
-    color: #1a5276; /* Deine dunkle Akzentfarbe */
-    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Link-Unterstreichung */
-    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
-}
+        .hinweis-box.warnung {
+            background-color: #fffbe6;
+            border-color: #ffe58f;
+        }
 
-.site-logo:hover {
-    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
-}
-</style>
+        /* 3. Formular-Stile */
+        form {
+            padding: 2.5rem;
+            background: var(--white-color);
+            border-radius: var(--border-radius-main);
+            box-shadow: var(--shadow);
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light-text-color);
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-small);
+            box-sizing: border-box; /* Wichtig für konsistente Größen */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button, .button-style {
+            display: inline-block;
+            width: 100%;
+            padding: 0.9rem 1.8rem;
+            background: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: var(--border-radius-small);
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover, .button-style:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* 4. Pop-up Fenster */
+        #spendenPopup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background: var(--white-color);
+            padding: 2rem;
+            border-radius: var(--border-radius-main);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        
+        .popup-content h2 {
+            margin-top: 0;
+        }
+        
+        .paypal-button {
+            background:#ffc439;
+            border:none;
+            padding:0.8rem 1.6rem;
+            font-weight:bold;
+            border-radius:var(--border-radius-small);
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .close-popup-btn {
+            margin-top: 1rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* 5. Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
 <body>
 
