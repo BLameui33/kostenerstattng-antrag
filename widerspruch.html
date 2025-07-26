@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
         /* 1. Grundlegende Stile & Farbvariablen */
         :root {
             --primary-color: #0070f3;
@@ -216,68 +217,82 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <a href="index.html" class="site-logo">Kassen-Lotse</a>
-</header>
+    <header class="site-header">
+        <a href="index.html" class="site-logo">Kassen-Lotse</a>
+    </header>
 
-<h1>Widerspruch im Kostenerstattungsverfahren</h1>
+    <div class="main-container">
+    
+        <div class="intro-text">
+            <h1>Widerspruch im Kostenerstattungsverfahren</h1>
+            <p>Wenn dein Antrag abgelehnt wurde, kannst du Widerspruch einlegen. Fülle dazu das folgende Formular aus – dein PDF wird automatisch erstellt:</p>
+        </div>
 
-<p>Wenn dein Antrag abgelehnt wurde, kannst du Widerspruch einlegen. Fülle dazu das folgende Formular aus – dein PDF wird automatisch erstellt:</p>
-<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung. Für verbindliche Auskünfte wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
-</p>
-  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-  
-<form id="widerspruchForm">
-  <label for="name">Dein vollständiger Name</label>
-  <input type="text" id="name" required>
+        <div class="hinweis-box-container">
+            <div class="hinweis-box warnung">
+                <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung.
+            </div>
+            <div class="hinweis-box info">
+                <strong>Technischer Hinweis:</strong> Für einen erfolgreichen Download, nutze bitte einen Browser wie Chrome oder Firefox, nicht die Google-App.
+            </div>
+        </div>
+        
+        <form id="widerspruchForm">
+            <label for="name">Dein vollständiger Name</label>
+            <input type="text" id="name" required>
 
-  <label for="adresse">Deine Adresse</label>
-  <textarea id="adresse" required></textarea>
+            <label for="adresse">Deine Adresse</label>
+            <textarea id="adresse" required></textarea>
 
-  <label for="kasse">Name & Adresse der Krankenkasse</label>
-  <textarea id="kasse" required></textarea>
+            <label for="kasse">Name & Adresse der Krankenkasse</label>
+            <textarea id="kasse" required></textarea>
 
-  <label for="versichertennr">Versichertennummer</label>
-  <input type="text" id="versichertennr" required>
+            <label for="versichertennr">Versichertennummer</label>
+            <input type="text" id="versichertennr" required>
 
-  <label for="bescheiddatum">Datum des Ablehnungsbescheids</label>
-  <input type="date" id="bescheiddatum" required>
+            <label for="bescheiddatum">Datum des Ablehnungsbescheids</label>
+            <input type="date" id="bescheiddatum" required>
 
-  <button type="submit">📄 PDF Widerspruch erstellen</button>
-</form>
+            <button type="submit">📄 PDF Widerspruch erstellen</button>
+        </form>
 
-<div id="spendenPopup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
-  <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 400px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.2);">
-    <h2>Danke für deine Nutzung 💛</h2>
-    <p>Wenn dir dieses Tool geholfen hat, unterstütze es mit einer kleinen Spende:</p>
-    <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-top: 1rem;">
-      <input type="hidden" name="business" value="info@kassen-lotse.de" />
-      <input type="hidden" name="item_name" value="Spende für das Projekt Kostenerstattungsverfahren Psychotherapie." />
-      <input type="hidden" name="currency_code" value="EUR" />
-      <input type="submit" value="Spenden mit PayPal" style="background:#ffc439; border:none; padding:0.8rem 1.6rem; font-weight:bold; border-radius:5px; cursor: pointer;" />
-    </form>
-    <button onclick="closePopup()" style="margin-top: 1rem; background: none; border: none; color: #0070f3; font-weight: bold; cursor: pointer;">Nein danke, schließen</button>
-  </div>
-</div>
+    </div>
 
-<script>
-  document.getElementById("widerspruchForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    <div id="spendenPopup">
+        <div class="popup-content">
+            <h2>Danke für deine Nutzung 💛</h2>
+            <p>Wenn dir dieses Tool geholfen hat, unterstütze es mit einer kleinen Spende:</p>
+            <form action="https://www.paypal.com/donate" method="post" target="_blank">
+                <input type="hidden" name="business" value="info@kassen-lotse.de" />
+                <input type="hidden" name="item_name" value="Spende für das Projekt Kostenerstattungsverfahren Psychotherapie." />
+                <input type="hidden" name="currency_code" value="EUR" />
+                <input type="submit" value="Spenden mit PayPal" class="paypal-button" />
+            </form>
+            <button onclick="closePopup()" class="close-popup-btn">Nein danke, schließen</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz</a></p>
+    </footer>
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    <script>
+        document.getElementById("widerspruchForm").addEventListener("submit", function(e) {
+            e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const adresse = document.getElementById("adresse").value;
-    const kasse = document.getElementById("kasse").value;
-    const versichertennr = document.getElementById("versichertennr").value;
-    const bescheiddatum = document.getElementById("bescheiddatum").value;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
 
-    let text = `
+            const name = document.getElementById("name").value;
+            const adresse = document.getElementById("adresse").value;
+            const kasse = document.getElementById("kasse").value;
+            const versichertennr = document.getElementById("versichertennr").value;
+            const bescheiddatumInput = document.getElementById("bescheiddatum").value;
+            // Datum für die Anzeige im PDF formatieren
+            const bescheiddatum = new Date(bescheiddatumInput).toLocaleDateString("de-DE");
+
+
+            let text = `
 ${name}
 ${adresse}
 
@@ -300,27 +315,23 @@ Gemäß §13 Abs. 3 SGB V besteht in einem solchen Fall ein 'Rechtsanspruch' auf
 
 Ich fordere Sie daher auf, meinen Antrag erneut zu prüfen und mir die Kostenübernahme zu bewilligen. Sollte ich innerhalb der gesetzlich vorgesehenen Frist keine positive Rückmeldung erhalten, behalte ich mir rechtliche Schritte ausdrücklich vor.
 
-Mit freundlichen Grüßen 
+Mit freundlichen Grüßen
 
 ${name}
-    `;
+            `;
 
-    doc.setFontSize(12);
-    doc.text(text, 20, 20, { maxWidth: 170, lineHeightFactor: 1.5 });
-    doc.save("widerspruch_kostenerstattung.pdf");
+            doc.setFont('Helvetica'); // Eine modernere Schriftart
+            doc.setFontSize(12);
+            doc.text(text, 20, 20, { maxWidth: 170, lineHeightFactor: 1.5 });
+            doc.save("widerspruch_kostenerstattung.pdf");
 
-    // Pop-up anzeigen (statt dem alten spendenHinweis)
-    document.getElementById("spendenPopup").style.display = "flex";
-  });
+            document.getElementById("spendenPopup").style.display = "flex";
+        });
 
-  // Pop-up schließen (Funktion von script.js übernommen)
-  function closePopup() {
-    document.getElementById("spendenPopup").style.display = "none";
-  }
-</script>
-
-<footer>
-    <p>&copy; 2025 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
+        function closePopup() {
+            document.getElementById("spendenPopup").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>
