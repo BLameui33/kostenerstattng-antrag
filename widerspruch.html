@@ -281,10 +281,7 @@
         e.preventDefault();
 
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({
-            unit: "mm",
-            format: "a4"
-        });
+        const doc = new jsPDF({ unit: "mm", format: "a4" });
 
         // Formulardaten abrufen
         const name = document.getElementById("name").value;
@@ -299,51 +296,56 @@
         const heutigesDatum = new Date().toLocaleDateString("de-DE");
         const bescheiddatum = new Date(bescheiddatumInput).toLocaleDateString("de-DE");
 
-        // --- PDF-Erstellung ---
+        // --- PDF-Erstellung (Logik verbessert) ---
 
         doc.setFont('Helvetica');
         doc.setFontSize(12);
 
-        // 1. Absender (klein über dem Empfänger)
+        // 1. Absender & Datum
         doc.setFontSize(10);
         doc.text(absender, 20, 20);
-
-        // 2. Datum (oben rechts)
         doc.setFontSize(12);
         doc.text(heutigesDatum, 190, 35, { align: 'right' });
 
-        // 3. Empfänger (mit etwas Abstand)
+        // 2. Empfänger
         doc.text(empfaenger, 20, 50);
 
-        // 4. Betreffzeile
-        doc.setFont(undefined, 'bold'); // Schriftart fett
+        // 3. Betreffzeile
+        doc.setFont(undefined, 'bold');
         doc.text(`Widerspruch gegen Ihren Bescheid vom ${bescheiddatum}`, 20, 85);
-        doc.setFont(undefined, 'normal'); // Schriftart wieder normal
+        doc.setFont(undefined, 'normal');
         doc.text(`Versichertennummer: ${versichertennr}`, 20, 92);
         
-        // 5. Haupttext (wird automatisch umgebrochen)
-        const haupttext = `
-Sehr geehrte Damen und Herren,
-
-hiermit lege ich fristgerecht Widerspruch gegen Ihren Ablehnungsbescheid vom ${bescheiddatum} ein, in dem Sie meinen Antrag auf Kostenerstattung einer ambulanten psychotherapeutischen Behandlung abgelehnt haben.
+        // --- Getrennte Textblöcke für sauberes Layout ---
+        
+        // Der eigentliche Text des Widerspruchs
+        const haupttext = `hiermit lege ich fristgerecht Widerspruch gegen Ihren Ablehnungsbescheid vom ${bescheiddatum} ein, in dem Sie meinen Antrag auf Kostenerstattung einer ambulanten psychotherapeutischen Behandlung abgelehnt haben.
 
 Die Ablehnung ist aus meiner Sicht weder medizinisch noch rechtlich haltbar. Ich habe durch dokumentierte Kontaktversuche bei kassenzugelassenen Therapeut:innen nachgewiesen, dass ich trotz intensiver Bemühungen keinen Therapieplatz innerhalb einer zumutbaren Wartezeit finden konnte. Eine Behandlung bei einer approbierten, aber nicht kassenzugelassenen Therapeutin stellt daher keine Wahlleistung dar, sondern ist medizinisch dringend geboten.
 
 Gemäß § 13 Abs. 3 SGB V besteht in einem solchen Fall ein "Rechtsanspruch" auf Kostenerstattung. Die aktuelle Versorgungslage in der psychotherapeutischen Regelversorgung ist bundesweit als angespannt bekannt – dies kann jedoch nicht zulasten der Versicherten gehen. Auch das Bundessozialgericht (BSG) hat mehrfach betont, dass Kassen im Rahmen ihrer Fürsorgepflicht verpflichtet sind, in medizinisch notwendigen Fällen die Kosten zu übernehmen, wenn die Regelversorgung versagt (vgl. u.a. BSG, Urteil vom 21.05.1997 – 1 RK 28/95).
 
-Ich fordere Sie daher auf, meinen Antrag erneut zu prüfen und mir die Kostenübernahme zu bewilligen. Sollte ich innerhalb der gesetzlich vorgesehenen Frist keine positive Rückmeldung erhalten, behalte ich mir rechtliche Schritte ausdrücklich vor.
+Ich fordere Sie daher auf, meinen Antrag erneut zu prüfen und mir die Kostenübernahme zu bewilligen. Sollte ich innerhalb der gesetzlich vorgesehenen Frist keine positive Rückmeldung erhalten, behalte ich mir rechtliche Schritte ausdrücklich vor.`;
+        
+        // Startposition für den Fließtext
+        let currentY = 110; 
+        
+        // Anrede
+        doc.text('Sehr geehrte Damen und Herren,', 20, currentY);
+        currentY += 14; // 2 Zeilen Abstand
+        
+        // Haupttext einfügen und die neue Y-Position berechnen
+        const textLines = doc.splitTextToSize(haupttext, 170);
+        doc.text(textLines, 20, currentY);
+        currentY += textLines.length * 7; // Pro Zeile ca. 7mm nach unten
 
-Mit freundlichen Grüßen
-`;
+        // Grußformel mit Abstand platzieren
+        currentY += 14; // 2 Zeilen Abstand nach dem Text
+        doc.text('Mit freundlichen Grüßen', 20, currentY);
         
-        // Haupttext mit kontrolliertem Zeilenumbruch einfügen
-        const textLines = doc.splitTextToSize(haupttext, 170); // 170mm Breite für den Textblock
-        doc.text(textLines, 20, 110);
-        
-        // 6. Name am Ende (Position hängt von der Länge des Haupttextes ab)
-        // Wir berechnen die Position basierend auf der Anzahl der Zeilen im Haupttext
-        const textEndeY = 110 + (textLines.length * 7); // 7mm pro Zeile (Standard-Zeilenhöhe bei 12pt)
-        doc.text(name, 20, textEndeY + 10); // +10mm Abstand nach der Grußformel
+        // Name mit Abstand für die Unterschrift platzieren
+        currentY += 21; // 3 Zeilen Abstand für die Unterschrift
+        doc.text(name, 20, currentY);
 
         // PDF speichern
         doc.save("widerspruch_kostenerstattung.pdf");
