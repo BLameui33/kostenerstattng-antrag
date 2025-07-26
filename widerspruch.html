@@ -277,61 +277,85 @@
     </footer>
 
     <script>
-        document.getElementById("widerspruchForm").addEventListener("submit", function(e) {
-            e.preventDefault();
+    document.getElementById("widerspruchForm").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+            unit: "mm",
+            format: "a4"
+        });
 
-            const name = document.getElementById("name").value;
-            const adresse = document.getElementById("adresse").value;
-            const kasse = document.getElementById("kasse").value;
-            const versichertennr = document.getElementById("versichertennr").value;
-            const bescheiddatumInput = document.getElementById("bescheiddatum").value;
-            // Datum für die Anzeige im PDF formatieren
-            const bescheiddatum = new Date(bescheiddatumInput).toLocaleDateString("de-DE");
+        // Formulardaten abrufen
+        const name = document.getElementById("name").value;
+        const adresse = document.getElementById("adresse").value;
+        const kasse = document.getElementById("kasse").value;
+        const versichertennr = document.getElementById("versichertennr").value;
+        const bescheiddatumInput = document.getElementById("bescheiddatum").value;
+        
+        // Daten formatieren
+        const absender = `${name}\n${adresse}`;
+        const empfaenger = `An:\n${kasse}`;
+        const heutigesDatum = new Date().toLocaleDateString("de-DE");
+        const bescheiddatum = new Date(bescheiddatumInput).toLocaleDateString("de-DE");
 
+        // --- PDF-Erstellung ---
 
-            let text = `
-${name}
-${adresse}
+        doc.setFont('Helvetica');
+        doc.setFontSize(12);
 
-An:
-${kasse}
+        // 1. Absender (klein über dem Empfänger)
+        doc.setFontSize(10);
+        doc.text(absender, 20, 20);
 
-Versichertennummer: ${versichertennr}
+        // 2. Datum (oben rechts)
+        doc.setFontSize(12);
+        doc.text(heutigesDatum, 190, 35, { align: 'right' });
 
-${new Date().toLocaleDateString("de-DE")}
+        // 3. Empfänger (mit etwas Abstand)
+        doc.text(empfaenger, 20, 50);
 
-Widerspruch gegen die Ablehnung meines Antrags auf Kostenerstattung gemäß §13 Abs. 3 SGB V
-
+        // 4. Betreffzeile
+        doc.setFont(undefined, 'bold'); // Schriftart fett
+        doc.text(`Widerspruch gegen Ihren Bescheid vom ${bescheiddatum}`, 20, 85);
+        doc.setFont(undefined, 'normal'); // Schriftart wieder normal
+        doc.text(`Versichertennummer: ${versichertennr}`, 20, 92);
+        
+        // 5. Haupttext (wird automatisch umgebrochen)
+        const haupttext = `
 Sehr geehrte Damen und Herren,
 
 hiermit lege ich fristgerecht Widerspruch gegen Ihren Ablehnungsbescheid vom ${bescheiddatum} ein, in dem Sie meinen Antrag auf Kostenerstattung einer ambulanten psychotherapeutischen Behandlung abgelehnt haben.
 
 Die Ablehnung ist aus meiner Sicht weder medizinisch noch rechtlich haltbar. Ich habe durch dokumentierte Kontaktversuche bei kassenzugelassenen Therapeut:innen nachgewiesen, dass ich trotz intensiver Bemühungen keinen Therapieplatz innerhalb einer zumutbaren Wartezeit finden konnte. Eine Behandlung bei einer approbierten, aber nicht kassenzugelassenen Therapeutin stellt daher keine Wahlleistung dar, sondern ist medizinisch dringend geboten.
 
-Gemäß §13 Abs. 3 SGB V besteht in einem solchen Fall ein 'Rechtsanspruch' auf Kostenerstattung. Die aktuelle Versorgungslage in der psychotherapeutischen Regelversorgung ist bundesweit als angespannt bekannt – dies kann jedoch nicht zulasten der Versicherten gehen. Auch das Bundessozialgericht (BSG) hat mehrfach betont, dass Kassen im Rahmen ihrer Fürsorgepflicht verpflichtet sind, in medizinisch notwendigen Fällen die Kosten zu übernehmen, wenn die Regelversorgung versagt (vgl. u.a. BSG, Urteil vom 21.05.1997 – 1 RK 28/95).
+Gemäß § 13 Abs. 3 SGB V besteht in einem solchen Fall ein "Rechtsanspruch" auf Kostenerstattung. Die aktuelle Versorgungslage in der psychotherapeutischen Regelversorgung ist bundesweit als angespannt bekannt – dies kann jedoch nicht zulasten der Versicherten gehen. Auch das Bundessozialgericht (BSG) hat mehrfach betont, dass Kassen im Rahmen ihrer Fürsorgepflicht verpflichtet sind, in medizinisch notwendigen Fällen die Kosten zu übernehmen, wenn die Regelversorgung versagt (vgl. u.a. BSG, Urteil vom 21.05.1997 – 1 RK 28/95).
 
 Ich fordere Sie daher auf, meinen Antrag erneut zu prüfen und mir die Kostenübernahme zu bewilligen. Sollte ich innerhalb der gesetzlich vorgesehenen Frist keine positive Rückmeldung erhalten, behalte ich mir rechtliche Schritte ausdrücklich vor.
 
 Mit freundlichen Grüßen
+`;
+        
+        // Haupttext mit kontrolliertem Zeilenumbruch einfügen
+        const textLines = doc.splitTextToSize(haupttext, 170); // 170mm Breite für den Textblock
+        doc.text(textLines, 20, 110);
+        
+        // 6. Name am Ende (Position hängt von der Länge des Haupttextes ab)
+        // Wir berechnen die Position basierend auf der Anzahl der Zeilen im Haupttext
+        const textEndeY = 110 + (textLines.length * 7); // 7mm pro Zeile (Standard-Zeilenhöhe bei 12pt)
+        doc.text(name, 20, textEndeY + 10); // +10mm Abstand nach der Grußformel
 
-${name}
-            `;
+        // PDF speichern
+        doc.save("widerspruch_kostenerstattung.pdf");
 
-            doc.setFont('Helvetica'); // Eine modernere Schriftart
-            doc.setFontSize(12);
-            doc.text(text, 20, 20, { maxWidth: 170, lineHeightFactor: 1.5 });
-            doc.save("widerspruch_kostenerstattung.pdf");
+        // Spenden-Popup anzeigen
+        document.getElementById("spendenPopup").style.display = "flex";
+    });
 
-            document.getElementById("spendenPopup").style.display = "flex";
-        });
-
-        function closePopup() {
-            document.getElementById("spendenPopup").style.display = "none";
-        }
-    </script>
+    function closePopup() {
+        document.getElementById("spendenPopup").style.display = "none";
+    }
+</script>
 
 </body>
 </html>
