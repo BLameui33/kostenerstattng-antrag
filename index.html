@@ -210,6 +210,102 @@
 .site-logo:hover {
     color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
 }
+
+.case-study {
+        background: #f8f9fa;
+        border-left: 4px solid #1a5276;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 0 8px 8px 0;
+    }
+    .case-title { font-weight: bold; color: #1a5276; display: block; margin-bottom: 0.5rem; }
+    .case-result { font-weight: bold; color: #27ae60; margin-top: 0.5rem; display: block; }
+
+    .cta-button-container { text-align: center; margin-top: 1.5rem; margin-bottom: 2.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .cta-button {
+      display: inline-block;
+      background: #0070f3;
+      color: white !important;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.2s ease-in-out;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .cta-button:hover { background-color: #005bb5; transform: translateY(-2px); }
+    .cta-secondary { background-color: #6c757d; } /* Grau für Checklisten */
+    .cta-secondary:hover { background-color: #5a6268; }
+
+    .timeline { position: relative; margin: 2rem 0; padding-left: 20px; border-left: 2px solid #e9ecef; }
+    .timeline-item { position: relative; padding-left: 20px; margin-bottom: 1.5rem; }
+    .timeline-item::before {
+        content: ''; position: absolute; left: -26px; top: 5px;
+        width: 10px; height: 10px; border-radius: 50%; background: #0070f3; border: 2px solid #fff;
+    }
+    .timeline-title { font-weight: bold; display: block; margin-bottom: 0.2rem; }
+
+    .promo-teaser {
+  max-width: 720px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  font-family: system-ui, sans-serif;
+}
+
+.promo-teaser h2 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.promo-teaser .lead {
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.promo-ctas,
+.free-help nav {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: .6rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-outline {
+  border: 1px solid #cbd5f5;
+  color: #1e40af;
+}
+
+.muted {
+  font-size: .9rem;
+  color: #64748b;
+  margin: 1.5rem 0 .5rem;
+}
+
   </style>
 	<script type="application/ld+json">
 {
@@ -276,26 +372,100 @@
     </div>
     <p>Wenn du keinen Therapieplatz bei einer kassenärztlich zugelassenen Praxis findest, hast du das Recht, eine Psychotherapie im <strong>Kostenerstattungsverfahren</strong> zu beantragen. Dieses Tool hilft dir dabei – kostenlos, anonym & direkt als PDF.</p>
 
+    <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung. Für verbindliche Auskünfte wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+
     <div class="cta-button-container">
         <a class="cta-button" href="antrag.html">📄 Antrag erstellen</a>
         <a class="cta-button" href="widerspruch.html">📑 Widerspruch schreiben</a>
 	<a class="cta-button" href="kontaktprotokoll.html" style="background-color: #5cb85c;">📝 Kontaktprotokoll führen</a>
     </div>
 
-    <div class="spendenhinweis">
-      <h2>💛 Unterstütze dieses Projekt</h2>
-      <p>Dieses Tool ist kostenlos und spendenbasiert. Wenn du möchtest, kannst du uns freiwillig mit einem kleinen Beitrag unterstützen:</p>
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
 
-      <form action="https://www.paypal.com/donate" method="post" target="_blank">
-        <input type="hidden" name="business" value="info@kassen-lotse.de" /> <input type="hidden" name="item_name" value="Unterstützung für Kassen-Lotse (Bereich Psychotherapie)" /> <input type="hidden" name="currency_code" value="EUR" />
-        <input type="hidden" name="charset" value="utf-8">
-        <input type="submit" value="Jetzt spenden mit PayPal" />
-      </form>
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://sozialrecht-lotse.de" class="btn btn-outline" target="_blank">🤝 Sozial-Lotse</a>
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+	  
+
+<div class="info-section">
+        <h2>✅ Checklisten zum Download</h2>
+        <p>Damit Sie nichts vergessen, haben wir kompakte Checklisten für Sie erstellt. Laden Sie diese herunter und haken Sie Schritt für Schritt ab.</p>
+        <div class="cta-button-container" style="justify-content: flex-start;">
+            <button onclick="generateChecklistPDF('antrag')" class="cta-button cta-secondary">⬇️ Checkliste: Antrag</button>
+            <button onclick="generateChecklistPDF('widerspruch')" class="cta-button cta-secondary">⬇️ Checkliste: Widerspruch</button>
+        </div>
     </div>
 
-	  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung. Für verbindliche Auskünfte wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
-</p>
+<div class="info-section">
+        <h2>Fallbeispiele aus der Praxis</h2>
+        <p>So haben es andere geschafft (Namen geändert):</p>
+        
+        <div class="case-study">
+            <span class="case-title">Fall 1: Die lange Warteliste</span>
+            <p>Lisa (29) rief bei 8 Therapeuten an, alle hatten Wartezeiten von über 6 Monaten. Sie dokumentierte jeden Anruf in unserem Protokoll-Tool und reichte den Antrag ein.</p>
+            <span class="case-result">Ergebnis: Die Krankenkasse genehmigte 24 Sitzungen bei einer Privattherapeutin innerhalb von 2 Wochen.</span>
+        </div>
+
+        <div class="case-study">
+            <span class="case-title">Fall 2: Der erfolgreiche Widerspruch</span>
+            <p>Michael (45) bekam zunächst eine Absage mit Verweis auf die "Terminservicestelle". Mit unserem Generator erstellte er einen Widerspruch und legte dar, dass die Servicestelle ihm nur unpassende Termine in 50km Entfernung anbot.</p>
+            <span class="case-result">Ergebnis: Im Widerspruchsverfahren gab die Kasse nach und übernahm die Kosten.</span>
+        </div>
+    </div>
+
+<div class="info-section">
+        <h2>Der Ablauf im Überblick</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-title">1. Sprechstunde & PTV 11</span>
+                Holen Sie sich eine erste Einschätzung und das Formular PTV 11 ("Dringlichkeit") bei einem beliebigen Therapeuten oder Arzt.
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-title">2. Suche & Protokoll</span>
+                Kontaktieren Sie mindestens 5-10 Vertragstherapeuten. Dokumentieren Sie die Absagen genau (Datum, Uhrzeit, Grund).
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-title">3. Privatpraxis finden</span>
+                Suchen Sie eine Privatpraxis, die Kapazitäten hat und fragen Sie nach einer Bescheinigung für das Kostenerstattungsverfahren.
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-title">4. Antrag stellen</span>
+                Nutzen Sie unseren Generator, um den Antrag bei der Kasse einzureichen.
+            </div>
+        </div>
+    </div>
 
     <div class="info-section">
       <h2>Wie funktioniert das?</h2>
@@ -334,6 +504,70 @@
 </div>
 	</div> 
   <footer>
-    <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="über.html">Über</a>| <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
-</body>
+    <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="über.html">Über</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
+
+<script>
+function generateChecklistPDF(type) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(26, 82, 118); // Dunkelblau
+
+    if (type === 'antrag') {
+        doc.text("Checkliste: Antrag Kostenerstattung", 20, 20);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        
+        const items = [
+            "PTV 11 Formular (Dringlichkeitsbescheinigung) liegt vor?",
+            "Kontaktprotokoll mit mind. 5-10 Absagen geführt?",
+            "Privattherapeut gefunden & Bescheinigung erhalten?",
+            "Ärztlicher Konsiliarbericht eingeholt (optional, aber gut)?",
+            "Antragsanschreiben erstellt (mit unserem Generator)?",
+            "Kopie aller Unterlagen für eigene Akten gemacht?"
+        ];
+        
+        let y = 40;
+        items.forEach(item => {
+            doc.rect(20, y-4, 4, 4); // Checkbox
+            doc.text(item, 30, y);
+            y += 12;
+        });
+
+    } else {
+        doc.text("Checkliste: Widerspruch einlegen", 20, 20);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        
+        const items = [
+            "Widerspruchsfrist geprüft (meist 1 Monat)?",
+            "Ablehnungsgrund genau gelesen?",
+            "Gegenargumente formuliert (z.B. Unzumutbarkeit Wegstrecke)?",
+            "Widerspruchsschreiben erstellt (mit unserem Generator)?",
+            "Versand per Einschreiben/Rückschein geplant?",
+            "Fristberechnung notiert?"
+        ];
+        
+        let y = 40;
+        items.forEach(item => {
+            doc.rect(20, y-4, 4, 4); // Checkbox
+            doc.text(item, 30, y);
+            y += 12;
+        });
+    }
+
+    // Footer
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text("Erstellt mit dem kostenlosen Tool von Kassen-Lotse.de", 20, 280);
+
+    doc.save(`checkliste_${type}.pdf`);
+}
+</script>
+
+  </body>
 </html>
