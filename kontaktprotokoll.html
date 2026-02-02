@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Kontaktprotokoll Therapeutensuche</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="antrag-style.css">
+  
   <link rel="icon" href="/logo-lotse-fav.png">
   <style>
     /* Grundlegende Stile von antrag-style.css werden übernommen */
@@ -126,27 +126,20 @@
         gap: 0.5rem; /* Abstand zwischen diesen Buttons */
     }
     
-    /* NEUE/ANGEPASSTE STYLES für die Navigations-Button-Gruppe unten */
-    /* Diese Regel zielt auf .button-group, die KEINE .button-group-protokoll-main ist,
-       oder allgemeiner auf .button-group, wenn .button-group-protokoll-main seine Flex-Styles
-       primär über die spezifischere Klasse .button-group-protokoll-main erhält.
-       Die einfachste Lösung ist, .button-group hier mit Flex auszustatten.
-       Die spezifischere .button-group-protokoll-main kann diese ggf. erweitern/überschreiben,
-       behält aber ihre eigenen Flex-Eigenschaften bei.
+    
     */
-    .form-container .button-group { /* Zielt auf alle .button-group innerhalb von .form-container */
+    .form-container .button-group { 
         display: flex;
-        flex-wrap: wrap; /* Buttons umbrechen lassen */
-        gap: 0.8rem;     /* Abstand zwischen den Buttons (horizontal und vertikal beim Umbruch) */
-        justify-content: flex-start; /* Buttons linksbündig starten lassen, oder 'center' */
-        /* Die Inline-Styles auf dem HTML-Element für margin-top und border-top bleiben erhalten */
+        flex-wrap: wrap; 
+        gap: 0.8rem;     
+        justify-content: flex-start; 
+       
     }
 
     .form-container .button-group .action-button {
-        margin-top: 0; /* Entfernt den oberen Rand, da 'gap' auch vertikal wirkt */
-        margin-right: 0; /* Entfernt den rechten Rand, da 'gap' den horizontalen Abstand regelt */
-        /* Optional: Buttons auf kleinen Screens volle Breite einnehmen lassen, wenn sie einzeln umbrechen */
-        /* flex-grow: 1; text-align: center; */ /* Würde Buttons dehnen, wenn Platz ist */
+        margin-top: 0; 
+        margin-right: 0; 
+      
     }
 
     .kontakt-info { /* Style für den Warnhinweis */
@@ -178,6 +171,188 @@
 
 .site-logo:hover {
     color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
+}
+
+/* ====== Basis / Reset-Feeling ====== */
+body {
+  background: linear-gradient(180deg, #f4f7fb, #eef2f7);
+  color: #1f2937;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+h1, h2, h3, legend {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* ====== Container ====== */
+.form-container {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+}
+
+/* ====== Header ====== */
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.site-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* ====== Layout ====== */
+.protokoll-container {
+  align-items: flex-start;
+}
+
+.eingabe-spalte,
+.anzeige-spalte {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* ====== Anzeige-Spalte ====== */
+.anzeige-spalte {
+  background: #f9fafb;
+  border: none;
+}
+
+.anzeige-spalte h2 {
+  border: none;
+  font-size: 1.4rem;
+}
+
+.anzeige-spalte h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+/* ====== Protokoll-Einträge ====== */
+.protokoll-eintrag-display {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.protokoll-eintrag-display:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.protokoll-eintrag-display strong {
+  color: #2563eb;
+}
+
+/* ====== Entfernen-Button ====== */
+.remove-btn-display {
+  background: #ef4444;
+  box-shadow: 0 4px 10px rgba(239,68,68,.35);
+}
+
+.remove-btn-display:hover {
+  background: #dc2626;
+}
+
+/* ====== Formulare ====== */
+.eingabe-form fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #f9fafb;
+}
+
+.eingabe-form legend {
+  padding: 0 .5rem;
+  color: #2563eb;
+}
+
+.eingabe-form label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.eingabe-form input,
+.eingabe-form textarea,
+.eingabe-form select {
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.eingabe-form input:focus,
+.eingabe-form textarea:focus,
+.eingabe-form select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* ====== Buttons ====== */
+.action-button {
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37,99,235,.35);
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(37,99,235,.45);
+  filter: brightness(1.05);
+}
+
+/* Gefährlicher Button */
+#deleteProtokollBtn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 8px 20px rgba(239,68,68,.35);
+}
+
+/* ====== Hinweisbox ====== */
+.kontakt-info {
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  border-left-color: #fb923c;
+  box-shadow: 0 6px 16px rgba(251,146,60,.2);
+}
+
+/* ====== Footer ====== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+footer a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 
   </style>
