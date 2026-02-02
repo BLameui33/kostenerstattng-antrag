@@ -3,217 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Widerspruch Kostenerstattungsverfahren – PDF erstellen</title>
+    
+    <!-- SEO: Meta Description für bessere Auffindbarkeit -->
+    <meta name="description" content="Kostenloser Generator für den Widerspruch bei Ablehnung der Kostenerstattung für Psychotherapie. Erstellen Sie rechtssicher Ihr PDF.">
+    
+    <title>Widerspruch Kostenerstattungsverfahren | Kassen-Lotse</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="icon" href="/logo-lotse-fav.png">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Welche Frist gilt für den Widerspruch bei der Krankenkasse?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sie haben in der Regel genau einen Monat Zeit, nachdem Sie den Ablehnungsbescheid erhalten haben. Es ist entscheidend, den Widerspruch innerhalb dieser Frist schriftlich (am besten per Einschreiben) einzureichen, um Ihre Rechte zu wahren."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Lohnt sich ein Widerspruch nach einer Ablehnung?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ja, sehr oft. Viele Krankenkassen lehnen Anträge auf Kostenerstattung im ersten Schritt standardisiert ab (z.B. mit Verweis auf die Terminservicestelle). Ein fundierter Widerspruch zeigt, dass Sie die Rechtslage kennen und zwingt die Kasse zu einer individuellen Prüfung."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Was passiert, wenn der Widerspruch auch abgelehnt wird?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sollte die Kasse (bzw. der Widerspruchsausschuss) auch Ihren Widerspruch zurückweisen, erhalten Sie einen sogenannten Widerspruchsbescheid. Gegen diesen können Sie innerhalb eines Monats Klage beim zuständigen Sozialgericht einreichen. Dies ist für Versicherte oft gerichtskostenfrei."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Muss ich einen Anwalt einschalten?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Für den Widerspruch selbst besteht kein Anwaltszwang. Sie können ihn selbst verfassen (z.B. mit dieser Vorlage). Wenn Sie sich unsicher fühlen oder es später zu einer Klage kommt, ist die Beratung durch einen Fachanwalt für Sozialrecht jedoch sehr empfehlenswert."
+    }
+  }]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Widerspruchs-Generator Krankenkasse",
+  "description": "Tool zur Erstellung eines formellen Widerspruchs bei Ablehnung der Kostenerstattung für Psychotherapie.",
+  "applicationCategory": "LegalApplication",
+  "operatingSystem": "Web Browser (Chrome, Firefox, Safari)",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Kassen-Lotse",
+    "url": "https://kostenerstattung-antrag.de"
+  },
+  "featureList": "Rechtssichere Formulierungen, PDF-Export, Fristen-Hinweis",
+  "about": {
+    "@type": "Thing",
+    "name": "Sozialrechtlicher Widerspruch"
+  }
+}
+</script>
+
+
+    
     <style>
-        /* 1. Grundlegende Stile & Farbvariablen */
-        :root {
-            --primary-color: #0070f3;
-            --primary-hover: #005bb5;
-            --secondary-color: #e9ecef;
-            --secondary-hover: #d4dae0;
-            --background-color: #f4f7f6;
-            --text-color: #333;
-            --light-text-color: #555;
-            --white-color: #ffffff;
-            --border-color: #ccc;
-            --border-radius-main: 12px;
-            --border-radius-small: 6px;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
+    /* --- Modernes Basis-Reset & Typografie (Identisch zur Hauptseite) --- */
+    :root {
+      --primary-color: #1a5276;    /* Dunkelblau - Seriös */
+      --accent-color: #d35400;     /* Orange - Akzente */
+      --bg-color: #f4f7f6;         /* Heller Hintergrund */
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --border-color: #ced4da;
+      --focus-shadow: 0 0 0 3px rgba(26, 82, 118, 0.25);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+    }
 
-        /* 2. Container und Layout */
-        .site-header {
-            background-color: var(--white-color);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
-            text-align: center;
-        }
+    /* --- Header --- */
+    .site-header {
+      background-color: var(--card-bg);
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e9ecef;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-        .site-logo {
-            color: #1a5276;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .site-logo:hover {
-            color: #d35400;
-        }
+    .site-logo {
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
 
-        .main-container {
-            max-width: 750px;
-            margin: 2rem auto; /* Abstand oben/unten und zentriert */
-            padding: 1rem;
-        }
+    /* --- Container & Layout --- */
+    .main-container {
+      max-width: 700px; /* Etwas schmaler als der große Antrag, da weniger Felder */
+      margin: 2rem auto;
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
 
-        .intro-text, .hinweis-box-container {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            color: #1a5276;
-            margin-bottom: 0.5rem;
-        }
+    h1 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
 
-        .hinweis-box {
-            padding: 1rem;
-            margin-top: 1rem;
-            border-left: 4px solid;
-            border-radius: var(--border-radius-small);
-            text-align: left;
-        }
-        
-        .hinweis-box.info {
-            background-color: #e6f7ff;
-            border-color: #91d5ff;
-        }
+    /* --- SEO & Trust Elemente --- */
+    .intro-text {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
 
-        .hinweis-box.warnung {
-            background-color: #fffbe6;
-            border-color: #ffe58f;
-        }
+    .meta-info {
+      font-size: 0.85rem;
+      color: #777;
+      background-color: #f8f9fa;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 1px solid #e9ecef;
+    }
 
-        /* 3. Formular-Stile */
-        form {
-            padding: 2.5rem;
-            background: var(--white-color);
-            border-radius: var(--border-radius-main);
-            box-shadow: var(--shadow);
-        }
+    /* --- Hinweis Boxen --- */
+    .highlight-box {
+      border-radius: 6px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 15px;
+      padding: 12px;
+    }
 
-        label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--light-text-color);
-        }
+    /* --- Formular Styling --- */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      margin-top: 20px;
+      color: #444;
+    }
 
-        input[type="text"],
-        input[type="date"],
-        textarea {
-            width: 100%;
-            padding: 0.9rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-small);
-            box-sizing: border-box; /* Wichtig für konsistente Größen */
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
-        }
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: var(--focus-shadow);
+    }
 
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
 
-        button, .button-style {
-            display: inline-block;
-            width: 100%;
-            padding: 0.9rem 1.8rem;
-            background: var(--primary-color);
-            color: var(--white-color);
-            border: none;
-            border-radius: var(--border-radius-small);
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    /* --- Button --- */
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      margin-top: 2rem;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background-color: #c0392b; /* Rot/Dunkelorange signalisiert Dringlichkeit/Widerspruch */
+      color: white;
+      transition: background-color 0.2s, transform 0.1s;
+    }
 
-        button:hover, .button-style:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-        }
+    button[type="submit"]:hover {
+      background-color: #a93226;
+    }
 
-        /* 4. Pop-up Fenster */
-        #spendenPopup {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            align-items: center;
-            justify-content: center;
-        }
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      font-size: 0.9rem;
+      background-color: #f4f7f6;
+      border-top: 1px solid #e9ecef;
+    }
 
-        .popup-content {
-            background: var(--white-color);
-            padding: 2rem;
-            border-radius: var(--border-radius-main);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
-        
-        .popup-content h2 {
-            margin-top: 0;
-        }
-        
-        .paypal-button {
-            background:#ffc439;
-            border:none;
-            padding:0.8rem 1.6rem;
-            font-weight:bold;
-            border-radius:var(--border-radius-small);
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            box-sizing: border-box;
-        }
-        
-        .close-popup-btn {
-            margin-top: 1rem;
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        /* 5. Footer */
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 2rem;
-            color: var(--light-text-color);
-            font-size: 0.9rem;
-        }
+    footer a { color: var(--primary-color); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
-        footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
-        }
-
+    .faq-section details {
+      background-color: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+    .faq-section details:hover {
+      border-color: var(--primary-color);
+    }
+    .faq-section details[open] {
+      border-left: 4px solid var(--primary-color); /* Blauer Balken wenn offen */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .faq-section summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-color);
+      list-style: none;
+      position: relative;
+      padding-right: 25px;
+    }
+    .faq-section summary::-webkit-details-marker { display: none; }
+    
+    /* Plus/Minus Icon */
+    .faq-section summary::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-weight: bold;
+      color: var(--primary-color);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .faq-section details[open] summary::after {
+      content: '-';
+      color: var(--accent-color); /* Orange wenn offen */
+    }
+    .faq-section p {
+      margin-top: 0.8rem;
+      margin-bottom: 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
     </style>
 </head>
 <body>
@@ -223,59 +287,113 @@
     </header>
 
     <div class="main-container">
-    
-        <div class="intro-text">
-            <h1>Widerspruch im Kostenerstattungsverfahren</h1>
-            <p>Wenn dein Antrag abgelehnt wurde, kannst du Widerspruch einlegen. Fülle dazu das folgende Formular aus – dein PDF wird automatisch erstellt:</p>
+        
+        <!-- YMYL Trust Element -->
+        <div class="meta-info">
+            ✅ Zuletzt redaktionell & technisch geprüft: <strong>02. Februar 2026</strong>
         </div>
 
-        <div class="hinweis-box-container">
-            <div class="hinweis-box warnung">
-                <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung.
-            </div>
-            <div class="hinweis-box info">
-                <strong>Technischer Hinweis:</strong> Für einen erfolgreichen Download, nutze bitte einen Browser wie Chrome oder Firefox, nicht die Google-App.
-            </div>
+        <h1>Widerspruch: Kostenerstattung</h1>
+        
+        <p class="intro-text">
+            Ihr Antrag auf Kostenerstattung wurde abgelehnt? Das ist leider keine Seltenheit, aber oft lohnt sich ein Widerspruch. Nutzen Sie diesen Generator, um formell korrekt und fristwahrend Widerspruch bei Ihrer Krankenkasse einzulegen.
+        </p>
+
+        <div class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800;">
+            <strong>Wichtiger Hinweis:</strong> Unsere Vorlagen ersetzen keine Rechtsberatung. Achten Sie auf die <strong>Widerspruchsfrist</strong> (meist 1 Monat nach Zugang des Bescheids).
         </div>
         
+        <div class="highlight-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3;">
+            <strong>Technischer Hinweis:</strong> Bitte nutzen Sie Browser wie Chrome, Firefox oder Safari für den Download (keine In-App Browser).
+        </div>
+
         <form id="widerspruchForm">
-            <label for="name">Dein vollständiger Name</label>
-            <input type="text" id="name" required>
+            <label for="name">Ihr vollständiger Name:</label>
+            <input type="text" id="name" required placeholder="Max Mustermann">
 
-            <label for="adresse">Deine Adresse</label>
-            <textarea id="adresse" required></textarea>
+            <label for="adresse">Ihre vollständige Adresse:</label>
+            <textarea id="adresse" required placeholder="Musterstraße 1&#10;12345 Musterstadt"></textarea>
 
-            <label for="kasse">Name & Adresse der Krankenkasse</label>
-            <textarea id="kasse" required></textarea>
+            <label for="kasse">Name & Adresse der Krankenkasse:</label>
+            <textarea id="kasse" required placeholder="AOK Musterkasse&#10;Am Krankenkassenplatz 1&#10;54321 Kassenstadt"></textarea>
 
-            <label for="versichertennr">Versichertennummer</label>
-            <input type="text" id="versichertennr" required>
+            <label for="versichertennr">Ihre Versichertennummer:</label>
+            <input type="text" id="versichertennr" required placeholder="X123456789">
 
-            <label for="bescheiddatum">Datum des Ablehnungsbescheids</label>
+            <label for="bescheiddatum">Datum des Ablehnungsbescheids:</label>
             <input type="date" id="bescheiddatum" required>
 
-            <button type="submit">📄 PDF Widerspruch erstellen</button>
+            <button type="submit">📄 PDF-Widerspruch jetzt erstellen</button>
         </form>
 
     </div>
 
-    <div id="spendenPopup">
-        <div class="popup-content">
-            <h2>Danke für deine Nutzung 💛</h2>
-            <p>Wenn dir dieses Tool geholfen hat, unterstütze es mit einer kleinen Spende:</p>
-            <form action="https://www.paypal.com/donate" method="post" target="_blank">
-                <input type="hidden" name="business" value="info@kassen-lotse.de" />
-                <input type="hidden" name="item_name" value="Spende für das Projekt Kostenerstattungsverfahren Psychotherapie." />
-                <input type="hidden" name="currency_code" value="EUR" />
-                <input type="submit" value="Spenden mit PayPal" class="paypal-button" />
-            </form>
-            <button onclick="closePopup()" class="close-popup-btn">Nein danke, schließen</button>
+    <!-- Spenden Popup (Gleiches Design wie Hauptseite) -->
+    <div id="spendenPopup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
+      <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 5px 30px rgba(0,0,0,0.2);">
+        <h2 style="font-size: 1.5em; margin-top:0; margin-bottom: 1rem; color: #1a5276;">Danke für deine Nutzung 💛</h2>
+        <p style="margin-bottom: 1.5rem; color: #555;">Wenn dir dieses Tool geholfen hat, unterstütze das Projekt gerne mit einer kleinen Spende:</p>
+        <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-top: 1rem;">
+          <input type="hidden" name="business" value="info@kassen-lotse.de" />
+          <input type="hidden" name="item_name" value="Spende für das Projekt Kostenerstattungsverfahren Psychotherapie." />
+          <input type="hidden" name="currency_code" value="EUR" />
+          <input type="submit" value="Spenden mit PayPal" style="background:#ffc439; border:none; padding:12px 24px; font-weight:bold; border-radius:30px; cursor: pointer; color: #333; font-size: 1em; transition: 0.2s;" />
+        </form>
+        <button onclick="closePopup()" style="margin-top: 1.5rem; background: none; border: 1px solid #ccc; color: #555; font-weight: normal; cursor: pointer; padding: 8px 16px; border-radius: 6px; font-size: 0.9em;">Schließen</button>
+      </div>
+
+      <!-- Sichtbarer FAQ Bereich -->
+<div class="main-container faq-section" style="margin-top: 3rem;">
+    <h2>Häufige Fragen zum Widerspruch</h2>
+    <p class="intro-text">Hintergrundinfos zum Vorgehen bei einer Ablehnung.</p>
+
+    <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Welche Frist gilt für den Widerspruch?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">
+                Sie haben in der Regel <strong>einen Monat</strong> Zeit, nachdem Sie den Ablehnungsbescheid erhalten haben. Es ist entscheidend, den Widerspruch innerhalb dieser Frist schriftlich (am besten per Einschreiben mit Rückschein oder Fax mit Sendebericht) einzureichen, um Ihre Rechte zu wahren.
+            </p>
         </div>
+    </details>
+
+    <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Lohnt sich ein Widerspruch überhaupt?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">
+                <strong>Ja, sehr oft.</strong> Viele Krankenkassen lehnen Anträge auf Kostenerstattung im ersten Schritt standardisiert ab ("Formbriefe"). Gründe sind oft pauschale Verweise auf freie Plätze bei der Terminservicestelle, ohne dass diese Plätze real existieren. Ein fundierter Widerspruch zwingt die Kasse zur Einzelfallprüfung.
+            </p>
+        </div>
+    </details>
+
+    <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Was passiert, wenn auch der Widerspruch abgelehnt wird?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">
+                Sollte der Widerspruchsausschuss der Kasse Ihren Einwand zurückweisen, erhalten Sie einen sogenannten <strong>Widerspruchsbescheid</strong>. Gegen diesen können Sie innerhalb eines Monats Klage beim zuständigen Sozialgericht einreichen. Verfahren vor dem Sozialgericht sind für Versicherte in der Regel gerichtskostenfrei.
+            </p>
+        </div>
+    </details>
+
+    <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Brauche ich zwingend einen Anwalt?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">
+                Für den Widerspruch selbst besteht <strong>kein Anwaltszwang</strong>. Sie können ihn selbst verfassen. Wenn Sie sich jedoch unsicher fühlen, die Kasse mit komplexen juristischen Argumenten kommt oder es später zu einer Klage geht, ist die Beratung durch einen Fachanwalt für Sozialrecht oder den VdK/SoVD sehr empfehlenswert.
+            </p>
+        </div>
+    </details>
+</div>
+
     </div>
     
+
     <footer>
-        <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz</a></p>
+        <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="über.html">Über</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz</a></p>
     </footer>
+
+</body>
+</html>
 
     <script>
     document.getElementById("widerspruchForm").addEventListener("submit", function(e) {

@@ -2,270 +2,636 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Kostenerstattungs-Antrag Psychotherapie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO: Meta Description für bessere Klickraten in Suchmaschinen -->
+  <meta name="description" content="Kostenloses Tool für den Antrag auf Kostenerstattung für Psychotherapie. Erstellen Sie einfach Ihr Anschreiben an die Krankenkasse bei Systemversagen.">
+  
+  <title>Kostenerstattungs-Antrag Psychotherapie | Kassen-Lotse</title>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Verweis auf dein externes CSS bleibt erhalten, wird aber durch untenstehende Styles ergänzt/überschrieben -->
   <link rel="stylesheet" href="antrag-style.css">
   <link rel="icon" href="/logo-lotse-fav.png">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Was ist das Kostenerstattungsverfahren nach § 13 Abs. 3 SGB V?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Wenn Ihre gesetzliche Krankenkasse Ihnen keinen Therapieplatz bei einem Vertragsbehandler in zumutbarer Zeit und Entfernung anbieten kann (Systemversagen), ist sie verpflichtet, die Kosten für eine Behandlung in einer Privatpraxis zu erstatten. Dieser Antrag dient der Geltendmachung dieses Rechts."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Wie viele Absagen von Therapeuten brauche ich für den Antrag?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Die meisten Krankenkassen verlangen ein Protokoll mit mindestens 5 bis 10 vergeblichen Kontaktversuchen bei Vertragstherapeuten. Es ist wichtig, Datum, Uhrzeit und Ergebnis (z.B. Wartezeit > 6 Monate) zu notieren."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Brauche ich eine PTV 11 Dringlichkeitsbescheinigung?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ja, in der Regel benötigen Sie eine Bestätigung über die Dringlichkeit der Behandlung (PTV 11 Formular), die Sie nach einer psychotherapeutischen Sprechstunde erhalten. Wenn dort 'zeitnah erforderlich' angekreuzt ist, steigen Ihre Chancen auf Kostenerstattung."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Ist dieser Generator für den Antrag kostenlos?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ja, das Tool 'Kassen-Lotse' ist vollständig kostenlos und werbefrei nutzbar. Es finanziert sich ausschließlich durch freiwillige Spenden zufriedener Nutzer."
+    }
+  }]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Generator für Psychotherapie-Kostenerstattung",
+  "description": "Kostenloses Tool zur Erstellung eines Antrags auf Kostenerstattung nach § 13 Abs. 3 SGB V bei Systemversagen.",
+  "applicationCategory": "HealthApplication", 
+  "operatingSystem": "Web Browser (Chrome, Firefox, Safari)",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Kassen-Lotse",
+    "url": "https://kostenerstattung-antrag.de"
+  },
+  "featureList": "PDF-Generierung, Protokoll-Funktion, Browser-lokale Speicherung",
+  "about": {
+    "@type": "Thing",
+    "name": "Kostenerstattungsverfahren Psychotherapie"
+  }
+}
+</script>
+
+  
   <style>
-    /* Spezifische Zusatz-Styles für die Protokollanzeige auf dieser Seite */
-    .protokoll-anzeige-bereich legend {
-      font-size: 1.1em; /* Etwas kleiner als Haupt-Legends */
-      color: #444;
-      font-weight: normal; /* Nicht so prominent wie die editierbaren Sektionen */
+    /* --- Modernes Basis-Reset & Typografie --- */
+    :root {
+      --primary-color: #1a5276;    /* Dunkelblau - Seriös */
+      --accent-color: #d35400;     /* Orange - Akzente */
+      --bg-color: #f4f7f6;         /* Heller Hintergrund - Modern */
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --border-color: #ced4da;
+      --focus-shadow: 0 0 0 3px rgba(26, 82, 118, 0.25);
     }
-    .protokoll-anzeige-eintrag {
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* --- Header --- */
+    .site-header {
+      background-color: var(--card-bg);
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e9ecef;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-logo {
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    /* --- Container & Layout --- */
+    .form-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    /* --- SEO & Trust Elemente (Neu) --- */
+    .intro-text {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-info {
+      font-size: 0.85rem;
+      color: #777;
       background-color: #f8f9fa;
-      border: 1px solid #e9ecef;
-      padding: 10px;
-      margin-bottom: 8px;
+      display: inline-block;
+      padding: 5px 10px;
       border-radius: 4px;
-      font-size: 0.9em;
+      margin-bottom: 20px;
+      border: 1px solid #e9ecef;
     }
-    .protokoll-anzeige-eintrag p {
-      margin: 4px 0; /* Etwas mehr Platz zwischen den Zeilen eines Eintrags */
-      line-height: 1.4;
+
+    /* --- Hinweis Boxen --- */
+    .highlight-box {
+      border-radius: 6px;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
-    .protokoll-anzeige-eintrag strong {
-      color: #333;
-      display: inline-block; /* Stellt sicher, dass das Strong-Element korrekt umgebrochen wird */
-      min-width: 100px; /* Für eine leichte Ausrichtung der Inhalte (Wert ggf. anpassen) */
-      margin-right: 5px;
+
+    /* --- Formular Styling --- */
+    fieldset {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      background-color: #fff;
     }
+
+    legend {
+      font-weight: 600;
+      color: var(--primary-color);
+      padding: 0 10px;
+      font-size: 1.1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      margin-top: 15px;
+      color: #444;
+    }
+
+    label small {
+      font-weight: normal;
+      color: #666;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box; /* Wichtig damit Padding nicht die Breite sprengt */
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: var(--focus-shadow);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* --- Protokoll Anzeige (Deine spezifischen Styles angepasst) --- */
+    .protokoll-anzeige-bereich {
+      background-color: #fcfcfc;
+      border-color: #dee2e6;
+    }
+    
+    .protokoll-anzeige-bereich legend {
+      font-size: 1rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .protokoll-anzeige-eintrag {
+      background-color: #ffffff;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 0 4px 4px 0;
+    }
+
     .protokoll-hinweis {
       font-size: 0.9em;
-      color: #555;
+      color: #0c5460;
       margin-bottom: 1rem;
-      background-color: #eef7ff;
-      padding: 8px;
+      background-color: #d1ecf1;
+      padding: 10px;
       border-radius: 4px;
-      border-left: 3px solid #0070f3;
+      border-left: none; /* Überschreibt alten Style */
+      border: 1px solid #bee5eb;
     }
-    /* Stil für den Header-Container */
-.site-header {
-    background-color: #ffffff; /* Weißer Hintergrund */
-    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
-    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
-    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
-    text-align: center;
-}
 
-/* Stil für das Logo bzw. den Seitennamen */
-.site-logo {
-    color: #1a5276; /* Deine dunkle Akzentfarbe */
-    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Link-Unterstreichung */
-    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
-}
+    .kontakt-info {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 15px;
+    }
 
-.site-logo:hover {
-    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
-}
+    /* --- Buttons --- */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #eee;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.2s, transform 0.1s;
+      flex: 1;
+    }
+
+    button[type="submit"] {
+      background-color: #27ae60; /* Grün für Erfolg/Abschluss */
+      color: white;
+      flex: 2; /* Submit Button größer */
+      font-size: 1.1rem;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #219150;
+    }
+
+    .action-button {
+      background-color: #e9ecef;
+      color: #333;
+      border: 1px solid #ced4da;
+    }
+
+    .action-button:hover {
+      background-color: #dde2e6;
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+      font-size: 0.9rem;
+      background-color: #f4f7f6;
+      border-top: 1px solid #e9ecef;
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    footer a:hover { text-decoration: underline; }
+
+    /* --- Mobile Anpassung --- */
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+      .button-group {
+        flex-direction: column;
+      }
+      button {
+        width: 100%;
+      }
+    }
+    .faq-section details {
+      background-color: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+    .faq-section details:hover {
+      border-color: var(--primary-color);
+    }
+    .faq-section details[open] {
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    .faq-section summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-color);
+      list-style: none; /* Standard-Pfeil ausblenden */
+      position: relative;
+      padding-right: 20px;
+    }
+    /* Eigener Pfeil für Summary */
+    .faq-section summary::-webkit-details-marker { display: none; }
+    .faq-section summary::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      font-weight: bold;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    .faq-section details[open] summary::after {
+      content: '-';
+    }
+    .faq-section p {
+      margin-top: 1rem;
+      margin-bottom: 0;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
 
-  <header class="site-header">
+<header class="site-header">
     <a href="index.html" class="site-logo">Kassen-Lotse</a>
 </header>
 
 <div class="form-container">
+  
+  <div class="meta-info">
+    ✅ Zuletzt redaktionell & technisch geprüft: <strong>02. Februar 2026</strong>
+  </div>
+
   <h1>Antrag auf Kostenerstattung Psychotherapie</h1>
-  <p>Füllen Sie dieses Formular sorgfältig aus, um Ihren Antrag auf Kostenerstattung für Psychotherapie zu erstellen. Ihre Eingaben können Sie im Browser zwischenspeichern.</p>
-<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung. Für verbindliche Auskünfte wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
-</p>
-  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
+  
+  <p class="intro-text">
+    Willkommen beim Antrags-Assistenten. Dieses Tool hilft Ihnen dabei, die formellen Anforderungen für einen Antrag auf Kostenerstattung nach § 13 Abs. 3 SGB V bei Ihrer Krankenkasse zu erfüllen. Generieren Sie ein sauberes PDF-Dokument, das alle notwendigen Angaben zu Ihrer vergeblichen Therapeutensuche und Dringlichkeit enthält.
+  </p>
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 12px; margin-top: 10px;">
+    <strong>Wichtiger Hinweis (Disclaimer):</strong> Unsere Inhalte und Formulare ersetzen keine Rechtsberatung. Sie dienen der allgemeinen Unterstützung im Prozess der Kostenerstattung. Für verbindliche Auskünfte wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Fachanwalt für Sozialrecht.
+  </p>
+  
+  <p class="highlight-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Bitte nutzen Sie für den PDF-Download einen Standard-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. innerhalb der Google-App oder Instagram) blockieren Downloads häufig.
+  </p>
   
   <form id="antragForm">
     <fieldset>
       <legend>Persönliche Angaben</legend>
       <label for="name">Vor- und Nachname:</label>
-      <input type="text" id="name" required>
+      <input type="text" id="name" required placeholder="Max Mustermann">
 
       <label for="adresse">Ihre vollständige Adresse: <small>(Straße, Hausnummer, PLZ, Ort)</small></label>
-      <textarea id="adresse" required></textarea>
+      <textarea id="adresse" required placeholder="Musterstraße 1&#10;12345 Musterstadt"></textarea>
 
       <label for="geburt">Geburtsdatum:</label>
       <input type="date" id="geburt" required>
 
       <label for="nummer">Versichertennummer: <small>(Finden Sie auf Ihrer Gesundheitskarte)</small></label>
-      <input type="text" id="nummer" required>
+      <input type="text" id="nummer" required placeholder="X123456789">
     </fieldset>
 
     <fieldset>
       <legend>Krankenkasse</legend>
       <label for="kasse">Name der Krankenkasse:</label>
-      <input type="text" id="kasse" required>
+      <input type="text" id="kasse" required placeholder="z.B. AOK, TK, Barmer">
 
       <label for="kassenAdresse">Vollständige Adresse der Krankenkasse: <small>(Straße, Hausnummer, PLZ, Ort)</small></label>
-      <textarea id="kassenAdresse" required></textarea>
+      <textarea id="kassenAdresse" required placeholder="Hauptstraße 1&#10;54321 Kassenstadt"></textarea>
     </fieldset>
 
     <fieldset>
       <legend>Angaben zur Therapiebedürftigkeit</legend>
-      <label for="beschwerden_diagnose">Kurze Beschreibung Ihrer Beschwerden/Diagnose: <small>(z.B. seit wann bestehen die Beschwerden, Hauptsymptome, ggf. Verdachtsdiagnose oder bereits ärztlich bestätigte Diagnose. Hinweis auf Notwendigkeitsbescheinigung kann hier erfolgen.)</small></label>
-      <textarea id="beschwerden_diagnose" rows="5" required></textarea>
+      <label for="beschwerden_diagnose">Kurze Beschreibung Ihrer Beschwerden/Diagnose: <small>(Bitte beschreiben Sie seit wann die Beschwerden bestehen, Hauptsymptome und ggf. eine ärztliche Diagnose oder Verdachtsdiagnose. Erwähnen Sie hier auch die Dringlichkeitsbescheinigung (PTV 11), falls vorhanden.)</small></label>
+      <textarea id="beschwerden_diagnose" rows="5" required placeholder="Ich leide seit ca. 6 Monaten unter..."></textarea>
     </fieldset>
 
     <fieldset>
       <legend>Nachweis der Therapeutensuche (manuelle Eingabe)</legend>
-      <p class="kontakt-info">Bitte dokumentieren Sie hier Ihre vergeblichen Versuche, einen Therapieplatz bei kassenzugelassenen Psychotherapeut:innen zu finden. **Mindestens 5 Versuche sind erforderlich.** Maximal 10 können eingetragen werden. <br><strong>Tipp:</strong> Nutzen Sie auch unser <a href="kontaktprotokoll.html" target="_blank">detailliertes Kontaktprotokoll-Tool</a>. Die dort gespeicherten Einträge werden weiter unten zur Übersicht angezeigt.</p>
+      <p class="kontakt-info">Bitte dokumentieren Sie hier Ihre vergeblichen Versuche, einen Therapieplatz bei kassenzugelassenen Psychotherapeut:innen zu finden. Dies ist der wichtigste Nachweis für das "Systemversagen". <strong>Mindestens 5 Absagen sind erforderlich.</strong> <br><br><strong>Tipp:</strong> Nutzen Sie auch unser <a href="kontaktprotokoll.html" target="_blank" style="color: var(--primary-color); font-weight:bold;">detailliertes Kontaktprotokoll-Tool</a>. Die dort gespeicherten Einträge werden weiter unten automatisch angezeigt.</p>
       
-      <fieldset>
-        <legend>Kontaktversuch 1 (Pflicht)</legend>
+      <!-- Kontaktversuch 1 -->
+      <fieldset style="background: #fafafa; border: 1px solid #eee;">
+        <legend style="font-size: 1rem; color: #555;">Kontaktversuch 1 (Pflicht)</legend>
         <label for="kontakt_name_0">Name des Therapeuten/der Praxis:</label>
         <input type="text" id="kontakt_name_0" required>
-        <label for="kontakt_datum_0">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_0" required>
-        <label for="kontakt_art_0">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_0" required>
-        <label for="kontakt_ergebnis_0">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_datum_0">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_0" required>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_art_0">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_0" placeholder="Telefon / E-Mail" required>
+            </div>
+        </div>
+        <label for="kontakt_ergebnis_0">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit > 6 Monate)</small></label>
         <input type="text" id="kontakt_ergebnis_0" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 2 (Pflicht)</legend>
+      <!-- Kontaktversuch 2 -->
+      <fieldset style="background: #fafafa; border: 1px solid #eee;">
+        <legend style="font-size: 1rem; color: #555;">Kontaktversuch 2 (Pflicht)</legend>
         <label for="kontakt_name_1">Name des Therapeuten/der Praxis:</label>
         <input type="text" id="kontakt_name_1" required>
-        <label for="kontakt_datum_1">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_1" required>
-        <label for="kontakt_art_1">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_1" required>
-        <label for="kontakt_ergebnis_1">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_datum_1">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_1" required>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_art_1">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_1" required>
+            </div>
+        </div>
+        <label for="kontakt_ergebnis_1">Ergebnis/Antwort:</label>
         <input type="text" id="kontakt_ergebnis_1" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 3 (Pflicht)</legend>
+      <!-- Kontaktversuch 3 -->
+      <fieldset style="background: #fafafa; border: 1px solid #eee;">
+        <legend style="font-size: 1rem; color: #555;">Kontaktversuch 3 (Pflicht)</legend>
         <label for="kontakt_name_2">Name des Therapeuten/der Praxis:</label>
         <input type="text" id="kontakt_name_2" required>
-        <label for="kontakt_datum_2">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_2" required>
-        <label for="kontakt_art_2">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_2" required>
-        <label for="kontakt_ergebnis_2">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_datum_2">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_2" required>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_art_2">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_2" required>
+            </div>
+        </div>
+        <label for="kontakt_ergebnis_2">Ergebnis/Antwort:</label>
         <input type="text" id="kontakt_ergebnis_2" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 4 (Pflicht)</legend>
+      <!-- Kontaktversuch 4 -->
+      <fieldset style="background: #fafafa; border: 1px solid #eee;">
+        <legend style="font-size: 1rem; color: #555;">Kontaktversuch 4 (Pflicht)</legend>
         <label for="kontakt_name_3">Name des Therapeuten/der Praxis:</label>
         <input type="text" id="kontakt_name_3" required>
-        <label for="kontakt_datum_3">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_3" required>
-        <label for="kontakt_art_3">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_3" required>
-        <label for="kontakt_ergebnis_3">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_datum_3">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_3" required>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_art_3">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_3" required>
+            </div>
+        </div>
+        <label for="kontakt_ergebnis_3">Ergebnis/Antwort:</label>
         <input type="text" id="kontakt_ergebnis_3" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 5 (Pflicht)</legend>
+      <!-- Kontaktversuch 5 -->
+      <fieldset style="background: #fafafa; border: 1px solid #eee;">
+        <legend style="font-size: 1rem; color: #555;">Kontaktversuch 5 (Pflicht)</legend>
         <label for="kontakt_name_4">Name des Therapeuten/der Praxis:</label>
         <input type="text" id="kontakt_name_4" required>
-        <label for="kontakt_datum_4">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_4" required>
-        <label for="kontakt_art_4">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_4" required>
-        <label for="kontakt_ergebnis_4">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_datum_4">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_4" required>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="kontakt_art_4">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_4" required>
+            </div>
+        </div>
+        <label for="kontakt_ergebnis_4">Ergebnis/Antwort:</label>
         <input type="text" id="kontakt_ergebnis_4" required>
       </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 6 (Optional)</legend>
-        <label for="kontakt_name_5">Name des Therapeuten/der Praxis:</label>
-        <input type="text" id="kontakt_name_5">
-        <label for="kontakt_datum_5">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_5">
-        <label for="kontakt_art_5">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_5">
-        <label for="kontakt_ergebnis_5">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
-        <input type="text" id="kontakt_ergebnis_5">
-      </fieldset>
+      <!-- Optionale Felder (eingeklappt oder normal, hier normal da keine JS Änderung erlaubt) -->
+      <details style="margin-top: 15px; border: 1px solid #ddd; padding: 10px; border-radius: 5px; background: #fff;">
+        <summary style="cursor: pointer; color: var(--primary-color); font-weight: bold;">Weitere Kontaktversuche (6-10) anzeigen</summary>
+        <div style="margin-top: 15px;">
+            <fieldset style="background: #fafafa; border: 1px solid #eee;">
+                <legend style="font-size: 1rem; color: #555;">Kontaktversuch 6 (Optional)</legend>
+                <label for="kontakt_name_5">Name des Therapeuten/der Praxis:</label>
+                <input type="text" id="kontakt_name_5">
+                <label for="kontakt_datum_5">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_5">
+                <label for="kontakt_art_5">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_5">
+                <label for="kontakt_ergebnis_5">Ergebnis/Antwort:</label>
+                <input type="text" id="kontakt_ergebnis_5">
+            </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 7 (Optional)</legend>
-        <label for="kontakt_name_6">Name des Therapeuten/der Praxis:</label>
-        <input type="text" id="kontakt_name_6">
-        <label for="kontakt_datum_6">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_6">
-        <label for="kontakt_art_6">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_6">
-        <label for="kontakt_ergebnis_6">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
-        <input type="text" id="kontakt_ergebnis_6">
-      </fieldset>
+            <fieldset style="background: #fafafa; border: 1px solid #eee;">
+                <legend style="font-size: 1rem; color: #555;">Kontaktversuch 7 (Optional)</legend>
+                <label for="kontakt_name_6">Name des Therapeuten/der Praxis:</label>
+                <input type="text" id="kontakt_name_6">
+                <label for="kontakt_datum_6">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_6">
+                <label for="kontakt_art_6">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_6">
+                <label for="kontakt_ergebnis_6">Ergebnis/Antwort:</label>
+                <input type="text" id="kontakt_ergebnis_6">
+            </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 8 (Optional)</legend>
-        <label for="kontakt_name_7">Name des Therapeuten/der Praxis:</label>
-        <input type="text" id="kontakt_name_7">
-        <label for="kontakt_datum_7">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_7">
-        <label for="kontakt_art_7">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_7">
-        <label for="kontakt_ergebnis_7">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
-        <input type="text" id="kontakt_ergebnis_7">
-      </fieldset>
+            <fieldset style="background: #fafafa; border: 1px solid #eee;">
+                <legend style="font-size: 1rem; color: #555;">Kontaktversuch 8 (Optional)</legend>
+                <label for="kontakt_name_7">Name des Therapeuten/der Praxis:</label>
+                <input type="text" id="kontakt_name_7">
+                <label for="kontakt_datum_7">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_7">
+                <label for="kontakt_art_7">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_7">
+                <label for="kontakt_ergebnis_7">Ergebnis/Antwort:</label>
+                <input type="text" id="kontakt_ergebnis_7">
+            </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 9 (Optional)</legend>
-        <label for="kontakt_name_8">Name des Therapeuten/der Praxis:</label>
-        <input type="text" id="kontakt_name_8">
-        <label for="kontakt_datum_8">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_8">
-        <label for="kontakt_art_8">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_8">
-        <label for="kontakt_ergebnis_8">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
-        <input type="text" id="kontakt_ergebnis_8">
-      </fieldset>
+            <fieldset style="background: #fafafa; border: 1px solid #eee;">
+                <legend style="font-size: 1rem; color: #555;">Kontaktversuch 9 (Optional)</legend>
+                <label for="kontakt_name_8">Name des Therapeuten/der Praxis:</label>
+                <input type="text" id="kontakt_name_8">
+                <label for="kontakt_datum_8">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_8">
+                <label for="kontakt_art_8">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_8">
+                <label for="kontakt_ergebnis_8">Ergebnis/Antwort:</label>
+                <input type="text" id="kontakt_ergebnis_8">
+            </fieldset>
 
-      <fieldset>
-        <legend>Kontaktversuch 10 (Optional)</legend>
-        <label for="kontakt_name_9">Name des Therapeuten/der Praxis:</label>
-        <input type="text" id="kontakt_name_9">
-        <label for="kontakt_datum_9">Datum des Kontakts:</label>
-        <input type="date" id="kontakt_datum_9">
-        <label for="kontakt_art_9">Art des Kontakts: <small>(z.B. Telefon, E-Mail, Persönlich)</small></label>
-        <input type="text" id="kontakt_art_9">
-        <label for="kontakt_ergebnis_9">Ergebnis/Antwort: <small>(z.B. Absage, Wartezeit X Monate, keine Antwort, Therapieplatz erst ab Monat Y)</small></label>
-        <input type="text" id="kontakt_ergebnis_9">
-      </fieldset>
+            <fieldset style="background: #fafafa; border: 1px solid #eee;">
+                <legend style="font-size: 1rem; color: #555;">Kontaktversuch 10 (Optional)</legend>
+                <label for="kontakt_name_9">Name des Therapeuten/der Praxis:</label>
+                <input type="text" id="kontakt_name_9">
+                <label for="kontakt_datum_9">Datum des Kontakts:</label>
+                <input type="date" id="kontakt_datum_9">
+                <label for="kontakt_art_9">Art des Kontakts:</label>
+                <input type="text" id="kontakt_art_9">
+                <label for="kontakt_ergebnis_9">Ergebnis/Antwort:</label>
+                <input type="text" id="kontakt_ergebnis_9">
+            </fieldset>
+        </div>
+      </details>
     </fieldset>
 
     <fieldset class="protokoll-anzeige-bereich">
-        <legend>Übersicht: Bereits kontaktierte Therapeut:innen (aus Kontaktprotokoll)</legend>
-        <p class="protokoll-hinweis">Diese Daten stammen aus dem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll-Tool</a> und können nur dort bearbeitet werden.</p>
+        <legend>Übersicht: Bereits kontaktierte Therapeut:innen</legend>
+        <p class="protokoll-hinweis">Diese Daten werden automatisch aus Ihrem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll</a> geladen.</p>
         <div id="protokollAnzeigeBereitsKontaktiert">
             </div>
     </fieldset>
 
     <fieldset class="protokoll-anzeige-bereich">
-        <legend>Übersicht: Geplante Kontakte (aus Kontaktprotokoll)</legend>
-        <p class="protokoll-hinweis">Diese Daten stammen aus dem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll-Tool</a> und können nur dort bearbeitet werden.</p>
+        <legend>Übersicht: Geplante Kontakte</legend>
+        <p class="protokoll-hinweis">Daten aus dem <a href="kontaktprotokoll.html" target="_blank">Kontaktprotokoll-Tool</a>.</p>
         <div id="protokollAnzeigeNochZuKontaktieren">
             </div>
     </fieldset>
     <fieldset>
-      <legend>Gewünschte:r Therapeut:in (für Kostenerstattung)</legend>
+      <legend>Gewünschte:r Therapeut:in (Privatpraxis)</legend>
       <p class="kontakt-info">Geben Sie hier die Daten des/der approbierten Psychotherapeut:in an, bei dem/der Sie die Therapie im Kostenerstattungsverfahren beginnen möchten.</p>
       <label for="therapeut">Vor- und Nachname des/der Therapeut:in:</label>
       <input type="text" id="therapeut">
       <label for="therapeutAdresse">Praxisadresse des/der Therapeut:in:</label>
       <textarea id="therapeutAdresse"></textarea>
+      
       <label for="approbiert">Approbation als Psychotherapeut:in vorhanden?</label>
       <select id="approbiert">
         <option value="Ja" selected>Ja</option>
         <option value="Nein">Nein</option>
       </select>
+      
       <label for="kassenzulassung">Hat der/die Therapeut:in eine Kassenzulassung?</label>
       <select id="kassenzulassung">
         <option value="Nein" selected>Nein</option>
         <option value="Ja">Ja</option>
       </select>
+      
       <label for="verfuegbar">Kann die Behandlung zeitnah begonnen werden?</label>
       <select id="verfuegbar">
         <option value="Ja" selected>Ja</option>
@@ -274,32 +640,76 @@
     </fieldset>
 
     <div class="button-group">
-      <button type="button" id="saveBtn" class="action-button">Eingaben im Browser speichern</button>
-      <button type="button" id="loadBtn" class="action-button">Gespeicherte Eingaben laden</button>
-      <button type="submit">📄 PDF erstellen</button>
+      <button type="button" id="saveBtn" class="action-button">💾 Eingaben speichern</button>
+      <button type="button" id="loadBtn" class="action-button">📂 Eingaben laden</button>
+      <button type="submit">📄 PDF jetzt erstellen</button>
     </div>
   </form>
 </div>
 
+<!-- Spenden Popup bleibt unverändert in Funktion, aber leicht gestylt durch CSS oben -->
 <div id="spendenPopup" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
-  <div style="background: white; padding: 2rem; border-radius: 10px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.25);">
-    <h2 style="font-size: 1.5em; margin-top:0; margin-bottom: 1rem;">Danke für deine Nutzung 💛</h2>
-    <p style="margin-bottom: 1.5rem;">Wenn dir dieses Tool geholfen hat, unterstütze das Projekt gerne mit einer kleinen Spende:</p>
+  <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 5px 30px rgba(0,0,0,0.2);">
+    <h2 style="font-size: 1.5em; margin-top:0; margin-bottom: 1rem; color: #1a5276;">Danke für deine Nutzung 💛</h2>
+    <p style="margin-bottom: 1.5rem; color: #555;">Wenn dir dieses Tool geholfen hat, unterstütze das Projekt gerne mit einer kleinen Spende:</p>
     <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-top: 1rem;">
       <input type="hidden" name="business" value="info@kassen-lotse.de" /> <input type="hidden" name="item_name" value="Spende für das Tool Kostenerstattungsverfahren Psychotherapie." />
       <input type="hidden" name="currency_code" value="EUR" />
-      <input type="submit" value="Spenden mit PayPal" style="background:#ffc439; border:none; padding:0.9rem 1.8rem; font-weight:bold; border-radius:5px; cursor: pointer; color: #333; font-size: 1em;" />
+      <input type="submit" value="Spenden mit PayPal" style="background:#ffc439; border:none; padding:12px 24px; font-weight:bold; border-radius:30px; cursor: pointer; color: #333; font-size: 1em; transition: 0.2s;" />
     </form>
-    <button onclick="closePopup()" style="margin-top: 1.5rem; background: none; border: 1px solid #ccc; color: #555; font-weight: normal; cursor: pointer; padding: 0.6rem 1.2rem; border-radius: 5px; font-size: 0.9em;">Schließen</button>
+    <button onclick="closePopup()" style="margin-top: 1.5rem; background: none; border: 1px solid #ccc; color: #555; font-weight: normal; cursor: pointer; padding: 8px 16px; border-radius: 6px; font-size: 0.9em;">Schließen</button>
   </div>
+
+  <!-- FAQ Section (Sichtbar) -->
+<div class="form-container faq-section" style="margin-top: 3rem;">
+  <h2>Häufige Fragen & Antworten (FAQ)</h2>
+  <p class="intro-text">Wichtige Informationen rund um das Kostenerstattungsverfahren und diesen Generator.</p>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Was ist das Kostenerstattungsverfahren nach § 13 Abs. 3 SGB V?</summary>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        Wenn Ihre gesetzliche Krankenkasse Ihnen keinen Therapieplatz bei einem Vertragsbehandler in zumutbarer Zeit und Entfernung anbieten kann (Systemversagen), ist sie verpflichtet, die Kosten für eine Behandlung in einer Privatpraxis zu erstatten. Dieser Antrag dient der Geltendmachung dieses Rechts.
+      </p>
+    </div>
+  </details>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Wie viele Absagen von Therapeuten brauche ich für den Antrag?</summary>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        Die meisten Krankenkassen verlangen ein Protokoll mit mindestens 5 bis 10 vergeblichen Kontaktversuchen bei Vertragstherapeuten. Es ist wichtig, Datum, Uhrzeit und Ergebnis (z.B. Wartezeit > 6 Monate) genau zu notieren.
+      </p>
+    </div>
+  </details>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Brauche ich eine PTV 11 Dringlichkeitsbescheinigung?</summary>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        Ja, in der Regel benötigen Sie eine Bestätigung über die Dringlichkeit der Behandlung (PTV 11 Formular), die Sie nach einer psychotherapeutischen Sprechstunde erhalten. Wenn dort "zeitnah erforderlich" angekreuzt ist, steigen Ihre Chancen auf Kostenerstattung deutlich.
+      </p>
+    </div>
+  </details>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Ist dieser Generator für den Antrag kostenlos?</summary>
+    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">
+        Ja, das Tool "Kassen-Lotse" ist vollständig kostenlos und werbefrei nutzbar. Es finanziert sich ausschließlich durch freiwillige Spenden zufriedener Nutzer, um Hosting und Wartung zu decken.
+      </p>
+    </div>
+  </details>
+</div>
+
 </div>
 
 <script src="script.js"></script>
 
 <footer>
-    <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
-</body>
- 
+    <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="über.html">Über</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz</a></p> 
+</footer> 
+
 </body>
 </html>
