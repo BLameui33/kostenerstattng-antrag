@@ -506,11 +506,22 @@
   <footer>
     <p>&copy; 2026 Kassen-Lotse | <a href="impressum.html">Impressum</a> | <a href="über.html">Über</a> | <a href="https://kassen-lotse.de/datenschutz.html" target="_blank">Datenschutz (Kassen-Lotse.de)</a></p> </footer> 
 
+<!-- 1. Bibliothek laden (WICHTIG: Muss vor dem eigenen Script stehen) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- 2. Dein Skript -->
 <script>
 function generateChecklistPDF(type) {
+    // Sicherheitscheck: Wurde die Bibliothek geladen?
+    if (!window.jspdf) {
+        alert("Fehler: Die PDF-Bibliothek konnte nicht geladen werden. Bitte prüfen Sie Ihre Internetverbindung.");
+        return;
+    }
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
+    // Design-Einstellungen
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
     doc.setTextColor(26, 82, 118); // Dunkelblau
@@ -532,7 +543,9 @@ function generateChecklistPDF(type) {
         
         let y = 40;
         items.forEach(item => {
-            doc.rect(20, y-4, 4, 4); // Checkbox
+            // Kleines Quadrat als Checkbox zeichnen
+            doc.setDrawColor(0);
+            doc.rect(20, y-4, 4, 4); 
             doc.text(item, 30, y);
             y += 12;
         });
@@ -554,7 +567,8 @@ function generateChecklistPDF(type) {
         
         let y = 40;
         items.forEach(item => {
-            doc.rect(20, y-4, 4, 4); // Checkbox
+            doc.setDrawColor(0);
+            doc.rect(20, y-4, 4, 4); 
             doc.text(item, 30, y);
             y += 12;
         });
@@ -568,6 +582,7 @@ function generateChecklistPDF(type) {
     doc.save(`checkliste_${type}.pdf`);
 }
 </script>
+
 
   </body>
 </html>
